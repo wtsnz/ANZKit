@@ -1,0 +1,4 @@
+github "TakeScoop/SwiftyRSA" ~> 0.5.0
+github "ReactiveX/RxSwift" ~> 3.0
+github "RxSwiftCommunity/RxAlamofire" "master"
+github "Alamofire/Alamofire" ~> 4.0
