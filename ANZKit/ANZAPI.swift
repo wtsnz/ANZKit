@@ -21,7 +21,17 @@ public class ANZService: ServiceType {
     
     internal var serverConfig: ServerConfigType
     
-    internal var requestId: Int
+    private var _requestId: Int = 0
+    internal var requestId: Int {
+        get {
+            let value = _requestId
+            _requestId = _requestId + 1
+            return value
+        }
+        set {
+            self._requestId = newValue
+        }
+    }
     
     internal var apiKey: String
     
@@ -38,7 +48,7 @@ public class ANZService: ServiceType {
     
     public init(serverConfig: ServerConfigType, requestId: Int = 4200, apiKey: String, userAgent: String, deviceDescription: String, deviceApiVersion: String, accessToken: String? ) {
         self.serverConfig = serverConfig
-        self.requestId = requestId
+        self._requestId = requestId
         self.apiKey = apiKey
         self.userAgent = userAgent
         self.deviceDescription = deviceDescription
