@@ -8,17 +8,47 @@
 
 import Foundation
 
-enum ResponseParserError: Error {
+public enum ResponseParserError: Error {
     
     case UnknownResponseFormat
     
 }
 
-struct ResponseParser {
+public struct ResponseParser {
     
-    static func parsePublicKeyRespose(responseData: Any) throws -> [PublicKey] {
+    static public func parseCurrentPublicKeyResponse(responseData: Any?) throws -> PublicKey {
         
+        guard let responseData = responseData else {
+            throw ResponseParserError.UnknownResponseFormat
+        }
         
+        guard let json = responseData as? [String: Any] else {
+            throw ResponseParserError.UnknownResponseFormat
+        }
+        
+        guard let publicKey = PublicKey(jsonDictionary: json) else {
+            throw ResponseParserError.UnknownResponseFormat
+        }
+        
+        return publicKey
+        
+    }
+    
+    static public func parseAuthenticateTokenResponse(responseData: Any?) throws -> String {
+        
+        guard let responseData = responseData else {
+            throw ResponseParserError.UnknownResponseFormat
+        }
+        
+        guard let json = responseData as? [String: Any] else {
+            throw ResponseParserError.UnknownResponseFormat
+        }
+        
+        guard let token = json["token"] as? String else {
+            throw ResponseParserError.UnknownResponseFormat
+        }
+        
+        return token
         
     }
     

@@ -8,16 +8,16 @@
 
 import Foundation
 
-struct PublicKey: ParsableObject {
+public struct PublicKey: ParsableObject {
     
     // httpStatus
     // serverDateTime
     
-    let key: String
-    let id: String
-    let validTo: String
+    public let key: String
+    public let id: Int
+    public let validTo: String
     
-    init?(jsonDictionary: [String: Any]) {
+    public init?(jsonDictionary: [String: Any]) {
         
         let parser = Parser(dictionary: jsonDictionary)
         

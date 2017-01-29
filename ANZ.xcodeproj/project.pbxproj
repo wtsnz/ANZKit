@@ -24,12 +24,28 @@
 		BE884C251E222788009D253F /* ANZKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE884C1E1E222788009D253F /* ANZKit.framework */; };
 		BE884C261E222788009D253F /* ANZKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BE884C1E1E222788009D253F /* ANZKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BE9594911E3A7C52002596A8 /* ResponseParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9594901E3A7C52002596A8 /* ResponseParser.swift */; };
+		BECA0B9E1E3D401900946B50 /* ANZKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECA0B9D1E3D401900946B50 /* ANZKitTests.swift */; };
+		BECA0BA01E3D401900946B50 /* ANZKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE884C1E1E222788009D253F /* ANZKit.framework */; };
+		BECA0BA71E3D408A00946B50 /* SwiftyRSA.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE059F551E2375F800789981 /* SwiftyRSA.framework */; };
+		BECA0BA81E3D408A00946B50 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE059F521E2375F100789981 /* RxSwift.framework */; };
+		BECA0BA91E3D408A00946B50 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE059F4F1E2375E900789981 /* Alamofire.framework */; };
+		BECA0BAC1E3D41C200946B50 /* current.json in Resources */ = {isa = PBXBuildFile; fileRef = BECA0BAB1E3D41C200946B50 /* current.json */; };
+		BECA0BB41E3D422000946B50 /* ResponseParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECA0BB31E3D422000946B50 /* ResponseParserTests.swift */; };
+		BECA0BB61E3D681500946B50 /* authenticate.json in Resources */ = {isa = PBXBuildFile; fileRef = BECA0BB51E3D681500946B50 /* authenticate.json */; };
+		BECA0BB81E3DCDAD00946B50 /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECA0BB71E3DCDAD00946B50 /* Secrets.swift */; };
 		BEEC0FA61E2386E500314EC6 /* ANZAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEEC0FA51E2386E500314EC6 /* ANZAPI.swift */; };
 		BEEC0FA81E2388DE00314EC6 /* PublicKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEEC0FA71E2388DE00314EC6 /* PublicKey.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
 		BE884C231E222788009D253F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BE884BFC1E22275B009D253F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BE884C1D1E222788009D253F;
+			remoteInfo = ANZKit;
+		};
+		BECA0BA11E3D401900946B50 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BE884BFC1E22275B009D253F /* Project object */;
 			proxyType = 1;
@@ -71,6 +87,13 @@
 		BE884C211E222788009D253F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BE95946B1E3A798C002596A8 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; };
 		BE9594901E3A7C52002596A8 /* ResponseParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseParser.swift; sourceTree = "<group>"; };
+		BECA0B9B1E3D401900946B50 /* ANZKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ANZKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		BECA0B9D1E3D401900946B50 /* ANZKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ANZKitTests.swift; sourceTree = "<group>"; };
+		BECA0B9F1E3D401900946B50 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BECA0BAB1E3D41C200946B50 /* current.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = current.json; sourceTree = "<group>"; };
+		BECA0BB31E3D422000946B50 /* ResponseParserTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseParserTests.swift; sourceTree = "<group>"; };
+		BECA0BB51E3D681500946B50 /* authenticate.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = authenticate.json; sourceTree = "<group>"; };
+		BECA0BB71E3DCDAD00946B50 /* Secrets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Secrets.swift; sourceTree = "<group>"; };
 		BEEC0FA51E2386E500314EC6 /* ANZAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ANZAPI.swift; sourceTree = "<group>"; };
 		BEEC0FA71E2388DE00314EC6 /* PublicKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublicKey.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -97,6 +120,17 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		BECA0B981E3D401900946B50 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BECA0BA01E3D401900946B50 /* ANZKit.framework in Frameworks */,
+				BECA0BA71E3D408A00946B50 /* SwiftyRSA.framework in Frameworks */,
+				BECA0BA81E3D408A00946B50 /* RxSwift.framework in Frameworks */,
+				BECA0BA91E3D408A00946B50 /* Alamofire.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -116,6 +150,7 @@
 				BE059F4E1E2375C800789981 /* Frameworks */,
 				BE884C061E22275B009D253F /* ANZ */,
 				BE884C1F1E222788009D253F /* ANZKit */,
+				BECA0B9C1E3D401900946B50 /* ANZKitTests */,
 				BE884C051E22275B009D253F /* Products */,
 			);
 			sourceTree = "<group>";
@@ -125,6 +160,7 @@
 			children = (
 				BE884C041E22275B009D253F /* ANZ.app */,
 				BE884C1E1E222788009D253F /* ANZKit.framework */,
+				BECA0B9B1E3D401900946B50 /* ANZKitTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -138,6 +174,7 @@
 				BE884C0E1E22275B009D253F /* Assets.xcassets */,
 				BE884C101E22275B009D253F /* LaunchScreen.storyboard */,
 				BE884C131E22275B009D253F /* Info.plist */,
+				BECA0BB71E3DCDAD00946B50 /* Secrets.swift */,
 			);
 			path = ANZ;
 			sourceTree = "<group>";
@@ -156,6 +193,74 @@
 				BE9594901E3A7C52002596A8 /* ResponseParser.swift */,
 			);
 			path = ANZKit;
+			sourceTree = "<group>";
+		};
+		BECA0B9C1E3D401900946B50 /* ANZKitTests */ = {
+			isa = PBXGroup;
+			children = (
+				BECA0BA61E3D406700946B50 /* Stubs */,
+				BECA0B9D1E3D401900946B50 /* ANZKitTests.swift */,
+				BECA0B9F1E3D401900946B50 /* Info.plist */,
+				BECA0BB31E3D422000946B50 /* ResponseParserTests.swift */,
+			);
+			path = ANZKitTests;
+			sourceTree = SOURCE_ROOT;
+		};
+		BECA0BA61E3D406700946B50 /* Stubs */ = {
+			isa = PBXGroup;
+			children = (
+				BECA0BB21E3D41F300946B50 /* digital.anz.com */,
+			);
+			path = Stubs;
+			sourceTree = "<group>";
+		};
+		BECA0BAD1E3D41C600946B50 /* v1 */ = {
+			isa = PBXGroup;
+			children = (
+				BECA0BAE1E3D41CE00946B50 /* publicKeys */,
+				BECA0BB51E3D681500946B50 /* authenticate.json */,
+			);
+			name = v1;
+			sourceTree = "<group>";
+		};
+		BECA0BAE1E3D41CE00946B50 /* publicKeys */ = {
+			isa = PBXGroup;
+			children = (
+				BECA0BAB1E3D41C200946B50 /* current.json */,
+			);
+			name = publicKeys;
+			sourceTree = "<group>";
+		};
+		BECA0BAF1E3D41D900946B50 /* preauth */ = {
+			isa = PBXGroup;
+			children = (
+				BECA0BB01E3D41E200946B50 /* web */,
+			);
+			name = preauth;
+			sourceTree = "<group>";
+		};
+		BECA0BB01E3D41E200946B50 /* web */ = {
+			isa = PBXGroup;
+			children = (
+				BECA0BB11E3D41E700946B50 /* api */,
+			);
+			name = web;
+			sourceTree = "<group>";
+		};
+		BECA0BB11E3D41E700946B50 /* api */ = {
+			isa = PBXGroup;
+			children = (
+				BECA0BAD1E3D41C600946B50 /* v1 */,
+			);
+			name = api;
+			sourceTree = "<group>";
+		};
+		BECA0BB21E3D41F300946B50 /* digital.anz.com */ = {
+			isa = PBXGroup;
+			children = (
+				BECA0BAF1E3D41D900946B50 /* preauth */,
+			);
+			name = digital.anz.com;
 			sourceTree = "<group>";
 		};
 		BEEC0FA91E23896700314EC6 /* Models */ = {
@@ -218,6 +323,25 @@
 			productReference = BE884C1E1E222788009D253F /* ANZKit.framework */;
 			productType = "com.apple.product-type.framework";
 		};
+		BECA0B9A1E3D401900946B50 /* ANZKitTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BECA0BA51E3D401900946B50 /* Build configuration list for PBXNativeTarget "ANZKitTests" */;
+			buildPhases = (
+				BECA0B971E3D401900946B50 /* Sources */,
+				BECA0B981E3D401900946B50 /* Frameworks */,
+				BECA0B991E3D401900946B50 /* Resources */,
+				BECA0BAA1E3D40AA00946B50 /* Carthage */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				BECA0BA21E3D401900946B50 /* PBXTargetDependency */,
+			);
+			name = ANZKitTests;
+			productName = ANZKitTests;
+			productReference = BECA0B9B1E3D401900946B50 /* ANZKitTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -239,6 +363,11 @@
 						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 					};
+					BECA0B9A1E3D401900946B50 = {
+						CreatedOnToolsVersion = 8.2;
+						DevelopmentTeam = U4MT6NDQZ9;
+						ProvisioningStyle = Automatic;
+					};
 				};
 			};
 			buildConfigurationList = BE884BFF1E22275B009D253F /* Build configuration list for PBXProject "ANZ" */;
@@ -256,6 +385,7 @@
 			targets = (
 				BE884C031E22275B009D253F /* ANZ */,
 				BE884C1D1E222788009D253F /* ANZKit */,
+				BECA0B9A1E3D401900946B50 /* ANZKitTests */,
 			);
 		};
 /* End PBXProject section */
@@ -278,10 +408,36 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		BECA0B991E3D401900946B50 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BECA0BB61E3D681500946B50 /* authenticate.json in Resources */,
+				BECA0BAC1E3D41C200946B50 /* current.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
 		BE059F581E23761B00789981 /* Carthage */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/SwiftyRSA.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/RxSwift.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Alamofire.framework",
+			);
+			name = Carthage;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
+		};
+		BECA0BAA1E3D40AA00946B50 /* Carthage */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -306,6 +462,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BE884C0A1E22275B009D253F /* ViewController.swift in Sources */,
+				BECA0BB81E3DCDAD00946B50 /* Secrets.swift in Sources */,
 				BE884C081E22275B009D253F /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -322,6 +479,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		BECA0B971E3D401900946B50 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BECA0B9E1E3D401900946B50 /* ANZKitTests.swift in Sources */,
+				BECA0BB41E3D422000946B50 /* ResponseParserTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -329,6 +495,11 @@
 			isa = PBXTargetDependency;
 			target = BE884C1D1E222788009D253F /* ANZKit */;
 			targetProxy = BE884C231E222788009D253F /* PBXContainerItemProxy */;
+		};
+		BECA0BA21E3D401900946B50 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BE884C1D1E222788009D253F /* ANZKit */;
+			targetProxy = BECA0BA11E3D401900946B50 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -536,6 +707,38 @@
 			};
 			name = Release;
 		};
+		BECA0BA31E3D401900946B50 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = U4MT6NDQZ9;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				INFOPLIST_FILE = ANZKitTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = io.townsend.ANZKitTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		BECA0BA41E3D401900946B50 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = U4MT6NDQZ9;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				INFOPLIST_FILE = ANZKitTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = io.townsend.ANZKitTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -565,6 +768,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		BECA0BA51E3D401900946B50 /* Build configuration list for PBXNativeTarget "ANZKitTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BECA0BA31E3D401900946B50 /* Debug */,
+				BECA0BA41E3D401900946B50 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};
