@@ -54,3 +54,43 @@ internal enum PreAuthRoute: RouteType {
         }
     }
 }
+
+
+internal enum Route: RouteType {
+    
+    public enum SessionMethod {
+        case withAccessToken
+        case withAuthCode(authCode: String)
+        case withDeviceToken(deviceToken: String, publicKeyId: Int)
+    }
+    
+    case sessions(method: SessionMethod)
+    
+    internal var requestProperties: (method: HTTPMethod, baseURL: BaseURL, path: String, parameters: [String: Any]?) {
+        
+        switch self {
+
+        case .sessions(let method):
+            
+            let path = "/sessions"
+            var parameters: [String: Any]? = nil
+            
+            switch method {
+            case .withAccessToken:
+                break
+            case .withAuthCode(let authCode):
+                parameters = [
+                    "authCode": authCode
+                ]
+            case .withDeviceToken(let deviceToken, let publicKeyId):
+                parameters = [
+                    "deviceToken": deviceToken,
+                    "publicKeyId": publicKeyId
+                ]
+            }
+            
+            return (.post, .standard, path, parameters)
+        }
+    }
+}
+

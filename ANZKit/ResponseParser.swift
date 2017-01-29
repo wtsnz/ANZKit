@@ -70,4 +70,23 @@ public struct ResponseParser {
         
     }
     
+    
+    static public func parseSessionResponse(responseData: Any?) throws -> Session {
+        
+        guard let responseData = responseData else {
+            throw ResponseParserError.UnknownResponseFormat
+        }
+        
+        guard let json = responseData as? [String: Any] else {
+            throw ResponseParserError.UnknownResponseFormat
+        }
+        
+        guard let session = Session(jsonDictionary: json) else {
+            throw ResponseParserError.UnknownResponseFormat
+        }
+        
+        return session
+        
+    }
+    
 }

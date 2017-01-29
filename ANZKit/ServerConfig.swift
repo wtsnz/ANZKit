@@ -32,7 +32,7 @@ public struct ServerConfig: ServerConfigType {
     
     public static let production: ServerConfigType = ServerConfig(
         preAuthBaseUrl: URL(string: "https://digital.anz.co.nz/preauth/web/api/v1")!,
-        baseUrl: URL(string: "https://digital.anz.co.nz/api/v6")!
+        baseUrl: URL(string: "https://secure.anz.co.nz/api/v6")!
     )
     
 }

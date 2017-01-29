@@ -32,9 +32,9 @@ class ViewController: UIViewController {
         
         service
             .authenticate(withUsername: Secrets.username, password: Secrets.password)
-            .subscribe(onNext: { [weak service] (accessToken) in
-                service?.accessToken = accessToken
-                dump(accessToken)
+            .subscribe(onNext: { [weak service] (session) in
+                //service?.accessToken = accessToken
+                dump(session)
             }, onError: { (error) in
                 print(error)
             })

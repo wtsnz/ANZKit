@@ -24,9 +24,9 @@ public struct ANZError: ParsableObject {
         
         do {
             self.code = try parser.fetch("code")
-            self.devDescription = try parser.fetch("devDescription")
-            self.sinceVersion = try parser.fetch("sinceVersion")
-            self.httpStatus = try parser.fetch("httpStatus")
+            self.devDescription = try parser.fetchOptional("devDescription")
+            self.sinceVersion = try parser.fetchOptional("sinceVersion")
+            self.httpStatus = try parser.fetchOptional("httpStatus")
             
         } catch let error {
             print(error)

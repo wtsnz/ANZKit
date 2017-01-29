@@ -137,10 +137,31 @@ extension ANZService {
         }
     }
     
-    public func authenticate(withUsername username: String, password: String) -> Observable<String> {
+    public func authenticate(withUsername username: String, password: String) -> Observable<Session> {
         return self.currentPublicKey()
             .flatMap { (publicKey) in
                 return self.authenticate(userId: username, password: password, publicKey: publicKey)
+            }
+            .do(onNext: { (accessToken) in
+                self.accessToken = accessToken
+            })
+            .flatMap({ (authToken) in
+                return self.getSession()
+            })
+    }
+    
+    public func getSession() -> Observable<Session> {
+        
+        let route = Route.sessions(method: Route.SessionMethod.withAccessToken)
+        let request = self.request(route: route)
+        
+        return self
+            .jsonRequest(request: request)
+            .flatMap { (jsonData) -> Observable<Session> in
+                guard let session = try? ResponseParser.parseSessionResponse(responseData: jsonData) else {
+                    return Observable.error(ServiceError.couldNotParseJSON)
+                }
+                return Observable.just(session)
         }
     }
     
