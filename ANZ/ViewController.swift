@@ -13,24 +13,12 @@ import SwiftyRSA
 import RxSwift
 
 class ViewController: UIViewController {
-
-    let api = ANZAPI()
     
     let disposeBag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        
-//        self.api.authenticate(withUsername: Secrets.username, password: Secrets.password)
-//        .subscribe(onNext: { (authToken) in
-//            print(authToken)
- //       }, onError: { (error) in
-   //         print(error)
-     //   })
-       // .addDisposableTo(self.disposeBag)
-        
-        
         let serverConfig = ServerConfig.production
         
         let service = ANZService(
@@ -42,7 +30,15 @@ class ViewController: UIViewController {
             accessToken: nil
         )
         
-        service.publicKeys()
+        service
+            .authenticate(withUsername: Secrets.username, password: Secrets.password)
+            .subscribe(onNext: { [weak service] (accessToken) in
+                service?.accessToken = accessToken
+                dump(accessToken)
+            }, onError: { (error) in
+                print(error)
+            })
+            .addDisposableTo(self.disposeBag)
         
     }
 

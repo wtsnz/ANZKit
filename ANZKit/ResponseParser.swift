@@ -16,6 +16,24 @@ public enum ResponseParserError: Error {
 
 public struct ResponseParser {
     
+    static public func parseErrorResponse(responseData: Any?) throws -> ANZError {
+        
+        guard let responseData = responseData else {
+            throw ResponseParserError.UnknownResponseFormat
+        }
+        
+        guard let json = responseData as? [String: Any] else {
+            throw ResponseParserError.UnknownResponseFormat
+        }
+        
+        guard let error = ANZError(jsonDictionary: json) else {
+            throw ResponseParserError.UnknownResponseFormat
+        }
+        
+        return error
+        
+    }
+    
     static public func parseCurrentPublicKeyResponse(responseData: Any?) throws -> PublicKey {
         
         guard let responseData = responseData else {
