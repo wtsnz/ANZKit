@@ -30,7 +30,6 @@ protocol ServiceType {
     
     /// The current access token.
     var accessToken: String? { get }
-    
 }
 
 extension ServiceType {
@@ -44,6 +43,14 @@ extension ServiceType {
         headers["Android-Api-Version"] = self.deviceApiVersion
         headers["Api-Key"] = self.apiKey
         headers["Api-Request-Id"] = String(self.requestId)
+        headers["Content-Type"] = "application/json; charset=utf-8"
+        headers["Accept"] = "application/json; charset=utf-8"
+
+        headers["Device-Id"] = "ad375799-7bc6-4d3a-b0a3-bed6e7ff4094"
+
+        if let accessToken = self.accessToken {
+            headers["Access-Token"] = accessToken
+        }
         
         return headers
     }

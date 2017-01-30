@@ -165,6 +165,21 @@ extension ANZService {
         }
     }
     
+    public func getSession(authCode: String) -> Observable<Session> {
+        
+        let route = Route.sessions(method: Route.SessionMethod.withAuthCode(authCode: authCode))
+        let request = self.request(route: route)
+        
+        return self
+            .jsonRequest(request: request)
+            .flatMap { (jsonData) -> Observable<Session> in
+                guard let session = try? ResponseParser.parseSessionResponse(responseData: jsonData) else {
+                    return Observable.error(ServiceError.couldNotParseJSON)
+                }
+                return Observable.just(session)
+        }
+    }
+    
 }
 
 extension ANZService {
