@@ -16,9 +16,8 @@ class ViewController: UIViewController {
     
     let disposeBag = DisposeBag()
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
+    lazy var service: ANZService = {
+        
         let serverConfig = ServerConfig.production
         
         let service = ANZService(
@@ -30,7 +29,35 @@ class ViewController: UIViewController {
             accessToken: nil
         )
         
-        service
+        return service
+    }()
+    
+    @IBOutlet weak var smsCodeTextField: UITextField!
+    
+    @IBAction func tappedAuth(_ sender: Any) {
+        
+        guard let authCode = smsCodeTextField.text else {
+            return
+        }
+        
+        print("code: \(authCode)")
+        
+        self.service.getSession(authCode: authCode)
+            .subscribe(onNext: { [weak service] (session) in
+                dump(session)
+            }, onError: { (error) in
+                print(error)
+            })
+            .addDisposableTo(self.disposeBag)
+        
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        
+        
+        self.service
             .authenticate(withUsername: Secrets.username, password: Secrets.password)
             .subscribe(onNext: { [weak service] (session) in
                 //service?.accessToken = accessToken
