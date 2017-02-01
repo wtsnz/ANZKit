@@ -13,14 +13,14 @@ public struct Session: ParsableObject {
     // httpStatus
     // serverDateTime
     
-    public let id: Int
+    public let ibSessionId: String
     
     public init?(jsonDictionary: [String: Any]) {
         
         let parser = Parser(dictionary: jsonDictionary)
         
         do {
-            self.id = try parser.fetch("ibSessionId")
+            self.ibSessionId = try parser.fetch("ibSessionId")
             
         } catch let error {
             print(error)

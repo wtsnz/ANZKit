@@ -19,6 +19,9 @@ protocol ServiceType {
     /// The client API key
     var apiKey: String { get }
     
+    /// The clients device id. This is a UUID
+    var deviceId: String { get }
+    
     /// The clients user agent. Eg. 'goMoney NZ/5.8.1/wifi/samsung SM-G900F/4.4.2/landscape/'
     var userAgent: String { get }
     
@@ -30,6 +33,9 @@ protocol ServiceType {
     
     /// The current access token.
     var accessToken: String? { get }
+    
+    /// The clients current session id
+    var ibSessionId: String? { get }
 }
 
 extension ServiceType {
@@ -46,10 +52,14 @@ extension ServiceType {
         headers["Content-Type"] = "application/json; charset=utf-8"
         headers["Accept"] = "application/json; charset=utf-8"
 
-        headers["Device-Id"] = "ad375799-7bc6-4d3a-b0a3-bed6e7ff4094"
+        headers["Device-Id"] = self.deviceId
 
         if let accessToken = self.accessToken {
             headers["Access-Token"] = accessToken
+        }
+        
+        if let ibSessionId = self.ibSessionId {
+            headers["IB-Session-ID"] = ibSessionId
         }
         
         return headers

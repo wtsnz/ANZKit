@@ -70,7 +70,6 @@ public struct ResponseParser {
         
     }
     
-    
     static public func parseSessionResponse(responseData: Any?) throws -> Session {
         
         guard let responseData = responseData else {
@@ -87,6 +86,44 @@ public struct ResponseParser {
         
         return session
         
+    }
+    
+    static public func parseAccountsResponse(responseData: Any?) throws -> [Account] {
+        
+        guard let responseData = responseData else {
+            throw ResponseParserError.UnknownResponseFormat
+        }
+        
+        guard let json = responseData as? [String: Any] else {
+            throw ResponseParserError.UnknownResponseFormat
+        }
+        
+        guard let accountsArray = json["accounts"] as? [[String: Any]] else {
+            throw ResponseParserError.UnknownResponseFormat
+        }
+        
+        let accounts = accountsArray.flatMap({ Account.init(jsonDictionary: $0) })
+        
+        return accounts
+    }
+    
+    static public func parseDevicesResponse(responseData: Any?) throws -> [Device] {
+        
+        guard let responseData = responseData else {
+            throw ResponseParserError.UnknownResponseFormat
+        }
+        
+        guard let json = responseData as? [String: Any] else {
+            throw ResponseParserError.UnknownResponseFormat
+        }
+        
+        guard let devicesArray = json["devices"] as? [[String: Any]] else {
+            throw ResponseParserError.UnknownResponseFormat
+        }
+        
+        let devices = devicesArray.flatMap({ Device.init(jsonDictionary: $0) })
+        
+        return devices
     }
     
 }

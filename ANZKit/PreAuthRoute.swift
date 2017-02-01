@@ -64,7 +64,18 @@ internal enum Route: RouteType {
         case withDeviceToken(deviceToken: String, publicKeyId: Int)
     }
     
+    /// Fetch the current session
     case sessions(method: SessionMethod)
+    
+    /// Fetch the list of accounts
+    case accounts(showInvestmentSchemes: Bool)
+    
+    /// Fetch the list of devices
+    case devices
+    
+    /// Registers a new device and sets the pin for the current DeviceId
+    /// Must also send a valid publicKey so we can decrypt anything the server sends us.
+    case setPin(pin: String, publicKeyId: Int, deviceName: String, devicePublicKey: String)
     
     internal var requestProperties: (method: HTTPMethod, baseURL: BaseURL, path: String, parameters: [String: Any]?) {
         
@@ -90,6 +101,30 @@ internal enum Route: RouteType {
             }
             
             return (.post, .standard, path, parameters)
+            
+        case .accounts(let showInvestmentSchemes):
+            
+            let parameters: [String: Any] = [
+                "showInvestmentSchemes": showInvestmentSchemes
+            ]
+            
+            return (.get, .standard, "/accounts", parameters)
+            
+        case .devices:
+            return (.get, .standard, "/devices", nil)
+        
+        case .setPin(let pin, let publicKeyId, let deviceName, let devicePublicKey):
+        
+            let parameters: [String: Any] = [
+                "pin": pin,
+                "publicKeyId": publicKeyId,
+                "newDevice": [
+                    "description": deviceName,
+                    "publicKey": devicePublicKey
+                ]
+            ]
+            
+            return (.get, .standard, "/accounts", parameters)
         }
     }
 }

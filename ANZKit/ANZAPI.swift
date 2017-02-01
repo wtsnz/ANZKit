@@ -37,23 +37,29 @@ public class ANZService: ServiceType {
     
     internal var userAgent: String
     
+    internal var deviceId: String
+    
     internal var deviceDescription: String
     
     internal var deviceApiVersion: String
     
     public var accessToken: String?
     
+    public var ibSessionId: String?
+    
     private static let session = URLSession(configuration: .default)
     let scheduler: OperationQueueScheduler
     
-    public init(serverConfig: ServerConfigType, requestId: Int = 4200, apiKey: String, userAgent: String, deviceDescription: String, deviceApiVersion: String, accessToken: String? ) {
+    public init(serverConfig: ServerConfigType, requestId: Int = 4200, apiKey: String, userAgent: String, deviceId: String, deviceDescription: String, deviceApiVersion: String, accessToken: String?, ibSessionId: String?) {
         self.serverConfig = serverConfig
         self._requestId = requestId
         self.apiKey = apiKey
         self.userAgent = userAgent
+        self.deviceId = deviceId
         self.deviceDescription = deviceDescription
         self.deviceApiVersion = deviceApiVersion
         self.accessToken = accessToken
+        self.ibSessionId = ibSessionId
         
         let operationQueue = OperationQueue()
         operationQueue.maxConcurrentOperationCount = 1
@@ -67,7 +73,14 @@ public class ANZService: ServiceType {
         return ANZService.session.rx.response(request: request)
             .subscribeOn(self.scheduler)
             .flatMap({ (value) -> Observable<Data> in
+                
                 let response = value.0
+                let data = value.1
+                
+                // The API assumes we always update the Access-Token that is provided in responses.
+                if let accessToken = response.allHeaderFields["Access-Token"] as? String {
+                    self.accessToken = accessToken
+                }
                 
                 guard (200..<300).contains(response.statusCode),
                     let headers = response.allHeaderFields as? [String:String],
@@ -85,7 +98,7 @@ public class ANZService: ServiceType {
                         return Observable.error(ServiceError.apiError(error: error))
                 }
                 
-                return Observable.just(value.1)
+                return Observable.just(data)
             })
             
             .flatMap { (data) -> Observable<Any> in
@@ -179,6 +192,53 @@ extension ANZService {
                 return Observable.just(session)
         }
     }
+    
+    public func getAccounts(showInvestmentSchemes: Bool = true) -> Observable<[Account]> {
+        
+        let route = Route.accounts(showInvestmentSchemes: showInvestmentSchemes)
+        let request = self.request(route: route)
+        
+        return self
+            .jsonRequest(request: request)
+            .flatMap { (jsonData) -> Observable<[Account]> in
+                guard let accounts = try? ResponseParser.parseAccountsResponse(responseData: jsonData) else {
+                    return Observable.error(ServiceError.couldNotParseJSON)
+                }
+                return Observable.just(accounts)
+        }
+    }
+    
+    public func getDevices() -> Observable<[Device]> {
+        
+        let route = Route.devices
+        let request = self.request(route: route)
+        
+        return self
+            .jsonRequest(request: request)
+            .flatMap { (jsonData) -> Observable<[Device]> in
+                guard let devices = try? ResponseParser.parseDevicesResponse(responseData: jsonData) else {
+                    return Observable.error(ServiceError.couldNotParseJSON)
+                }
+                return Observable.just(devices)
+        }
+    }
+    
+    /**
+    public func setPin(pin: String, deviceDescription: String, devicePublicKey: String) -> Observable<[Device]> {
+        
+        let route = Route.setPin(pin: encryptedPin, publicKeyId: <#T##Int#>, deviceName: <#T##String#>, devicePublicKey: <#T##String#>)
+        let request = self.request(route: route)
+        
+        return self
+            .jsonRequest(request: request)
+            .flatMap { (jsonData) -> Observable<[Device]> in
+                guard let devices = try? ResponseParser.parseDevicesResponse(responseData: jsonData) else {
+                    return Observable.error(ServiceError.couldNotParseJSON)
+                }
+                return Observable.just(devices)
+        }
+    }
+    */
     
 }
 
