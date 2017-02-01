@@ -21,9 +21,11 @@ class ViewController: UIViewController {
         let serverConfig = ServerConfig.production
         
         let deviceId = "ad375799-7bc6-4d3a-b0a3-bed6e7ff4094" // NSUUID().uuidString
+        let requestId = 5000
         
         let service = ANZService(
             serverConfig: serverConfig,
+            requestId: requestId,
             apiKey: "41b4c957-56c8-4f0a-9ed6-bab90a43fcf5",
             userAgent: "goMoney NZ/5.8.1/wifi/samsung SM-G900F/4.4.2/landscape/",
             deviceId: deviceId,
@@ -77,7 +79,6 @@ class ViewController: UIViewController {
         self.service
             .authenticate(withUsername: Secrets.username, password: Secrets.password)
             .subscribe(onNext: { [weak service] (session) in
-                //service?.accessToken = accessToken
                 dump(session)
             }, onError: { (error) in
                 print(error)

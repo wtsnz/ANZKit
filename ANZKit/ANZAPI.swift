@@ -65,7 +65,13 @@ public class ANZService: ServiceType {
         operationQueue.maxConcurrentOperationCount = 1
         
         self.scheduler = OperationQueueScheduler(operationQueue: operationQueue)
-        
+    }
+    
+    fileprivate func jsonRequest(route: RouteType) -> Observable<Any> {
+        return Observable.just(self.request(route: route))
+            .flatMap({ (request) in
+                return self.jsonRequest(request: request)
+            })
     }
     
     fileprivate func jsonRequest(request: URLRequest) -> Observable<Any> {
@@ -166,40 +172,43 @@ extension ANZService {
     public func getSession() -> Observable<Session> {
         
         let route = Route.sessions(method: Route.SessionMethod.withAccessToken)
-        let request = self.request(route: route)
         
         return self
-            .jsonRequest(request: request)
+            .jsonRequest(route: route)
             .flatMap { (jsonData) -> Observable<Session> in
                 guard let session = try? ResponseParser.parseSessionResponse(responseData: jsonData) else {
                     return Observable.error(ServiceError.couldNotParseJSON)
                 }
                 return Observable.just(session)
         }
+    }
+    
+    private func requestObservable(route: RouteType) -> Observable<URLRequest> {
+        return Observable.just(self.request(route: route))
     }
     
     public func getSession(authCode: String) -> Observable<Session> {
         
         let route = Route.sessions(method: Route.SessionMethod.withAuthCode(authCode: authCode))
-        let request = self.request(route: route)
-        
-        return self
-            .jsonRequest(request: request)
+
+        return self.jsonRequest(route: route)
             .flatMap { (jsonData) -> Observable<Session> in
                 guard let session = try? ResponseParser.parseSessionResponse(responseData: jsonData) else {
                     return Observable.error(ServiceError.couldNotParseJSON)
                 }
                 return Observable.just(session)
-        }
+            }
+            .do(onNext: { [weak self] (session) in
+                self?.ibSessionId = session.ibSessionId
+            })
     }
     
     public func getAccounts(showInvestmentSchemes: Bool = true) -> Observable<[Account]> {
         
         let route = Route.accounts(showInvestmentSchemes: showInvestmentSchemes)
-        let request = self.request(route: route)
         
         return self
-            .jsonRequest(request: request)
+            .jsonRequest(route: route)
             .flatMap { (jsonData) -> Observable<[Account]> in
                 guard let accounts = try? ResponseParser.parseAccountsResponse(responseData: jsonData) else {
                     return Observable.error(ServiceError.couldNotParseJSON)
@@ -211,10 +220,9 @@ extension ANZService {
     public func getDevices() -> Observable<[Device]> {
         
         let route = Route.devices
-        let request = self.request(route: route)
         
         return self
-            .jsonRequest(request: request)
+            .jsonRequest(route: route)
             .flatMap { (jsonData) -> Observable<[Device]> in
                 guard let devices = try? ResponseParser.parseDevicesResponse(responseData: jsonData) else {
                     return Observable.error(ServiceError.couldNotParseJSON)
