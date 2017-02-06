@@ -9,14 +9,14 @@
 /* Begin PBXBuildFile section */
 		BE054FF21E41D52A00DB4B65 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE054FF11E41D52A00DB4B65 /* Account.swift */; };
 		BE054FF41E41D6B700DB4B65 /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE054FF31E41D6B700DB4B65 /* Device.swift */; };
-		BE054FF61E431AAF00DB4B65 /* RSAUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE054FF51E431AAF00DB4B65 /* RSAUtils.swift */; };
 		BE059F501E2375E900789981 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE059F4F1E2375E900789981 /* Alamofire.framework */; };
 		BE059F511E2375E900789981 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE059F4F1E2375E900789981 /* Alamofire.framework */; };
 		BE059F531E2375F100789981 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE059F521E2375F100789981 /* RxSwift.framework */; };
 		BE059F541E2375F100789981 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE059F521E2375F100789981 /* RxSwift.framework */; };
 		BE059F561E2375F800789981 /* SwiftyRSA.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE059F551E2375F800789981 /* SwiftyRSA.framework */; };
 		BE059F571E2375F800789981 /* SwiftyRSA.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE059F551E2375F800789981 /* SwiftyRSA.framework */; };
-		BE17C8691E4847D800F83D55 /* CryptoExportImportManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE17C8681E4847D800F83D55 /* CryptoExportImportManager.swift */; };
+		BE17C86B1E487E8400F83D55 /* RSAUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE054FF51E431AAF00DB4B65 /* RSAUtils.swift */; };
+		BE17C86C1E48808500F83D55 /* CryptoExportImportManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE17C8681E4847D800F83D55 /* CryptoExportImportManager.swift */; };
 		BE1F43A51E39F571001259B1 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1F43A41E39F571001259B1 /* Parser.swift */; };
 		BE884C081E22275B009D253F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE884C071E22275B009D253F /* AppDelegate.swift */; };
 		BE884C0A1E22275B009D253F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE884C091E22275B009D253F /* ViewController.swift */; };
@@ -81,11 +81,11 @@
 /* Begin PBXFileReference section */
 		BE054FF11E41D52A00DB4B65 /* Account.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
 		BE054FF31E41D6B700DB4B65 /* Device.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
-		BE054FF51E431AAF00DB4B65 /* RSAUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSAUtils.swift; sourceTree = "<group>"; };
+		BE054FF51E431AAF00DB4B65 /* RSAUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RSAUtils.swift; path = ../ANZ/RSAUtils.swift; sourceTree = "<group>"; };
 		BE059F4F1E2375E900789981 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
 		BE059F521E2375F100789981 /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = Carthage/Build/iOS/RxSwift.framework; sourceTree = "<group>"; };
 		BE059F551E2375F800789981 /* SwiftyRSA.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyRSA.framework; path = Carthage/Build/iOS/SwiftyRSA.framework; sourceTree = "<group>"; };
-		BE17C8681E4847D800F83D55 /* CryptoExportImportManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CryptoExportImportManager.swift; sourceTree = "<group>"; };
+		BE17C8681E4847D800F83D55 /* CryptoExportImportManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CryptoExportImportManager.swift; path = ../ANZ/CryptoExportImportManager.swift; sourceTree = "<group>"; };
 		BE17C86A1E4878BF00F83D55 /* ANZ.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ANZ.entitlements; sourceTree = "<group>"; };
 		BE1F43A41E39F571001259B1 /* Parser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
 		BE884C041E22275B009D253F /* ANZ.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ANZ.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -190,7 +190,6 @@
 			isa = PBXGroup;
 			children = (
 				BE17C86A1E4878BF00F83D55 /* ANZ.entitlements */,
-				BE17C8681E4847D800F83D55 /* CryptoExportImportManager.swift */,
 				BE884C071E22275B009D253F /* AppDelegate.swift */,
 				BE884C091E22275B009D253F /* ViewController.swift */,
 				BE884C0B1E22275B009D253F /* Main.storyboard */,
@@ -198,7 +197,6 @@
 				BE884C101E22275B009D253F /* LaunchScreen.storyboard */,
 				BE884C131E22275B009D253F /* Info.plist */,
 				BECA0BB71E3DCDAD00946B50 /* Secrets.swift */,
-				BE054FF51E431AAF00DB4B65 /* RSAUtils.swift */,
 			);
 			path = ANZ;
 			sourceTree = "<group>";
@@ -206,6 +204,8 @@
 		BE884C1F1E222788009D253F /* ANZKit */ = {
 			isa = PBXGroup;
 			children = (
+				BE17C8681E4847D800F83D55 /* CryptoExportImportManager.swift */,
+				BE054FF51E431AAF00DB4B65 /* RSAUtils.swift */,
 				BEEC0FA91E23896700314EC6 /* Models */,
 				BE884C201E222788009D253F /* ANZKit.h */,
 				BE884C211E222788009D253F /* Info.plist */,
@@ -496,9 +496,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BE054FF61E431AAF00DB4B65 /* RSAUtils.swift in Sources */,
 				BE884C0A1E22275B009D253F /* ViewController.swift in Sources */,
-				BE17C8691E4847D800F83D55 /* CryptoExportImportManager.swift in Sources */,
 				BECA0BB81E3DCDAD00946B50 /* Secrets.swift in Sources */,
 				BE884C081E22275B009D253F /* AppDelegate.swift in Sources */,
 			);
@@ -512,10 +510,12 @@
 				BE054FF21E41D52A00DB4B65 /* Account.swift in Sources */,
 				BE1F43A51E39F571001259B1 /* Parser.swift in Sources */,
 				BE054FF41E41D6B700DB4B65 /* Device.swift in Sources */,
+				BE17C86B1E487E8400F83D55 /* RSAUtils.swift in Sources */,
 				BECA0BBA1E3DCF7F00946B50 /* Session.swift in Sources */,
 				BECA0BC01E3DE87200946B50 /* ANZError.swift in Sources */,
 				BECA0BC81E3DEF5F00946B50 /* PreAuthRoute.swift in Sources */,
 				BEEC0FA61E2386E500314EC6 /* ANZAPI.swift in Sources */,
+				BE17C86C1E48808500F83D55 /* CryptoExportImportManager.swift in Sources */,
 				BECA0BC41E3DEF0700946B50 /* ServerConfig.swift in Sources */,
 				BECA0BC61E3DEF4800946B50 /* RouteType.swift in Sources */,
 				BEEC0FA81E2388DE00314EC6 /* PublicKey.swift in Sources */,

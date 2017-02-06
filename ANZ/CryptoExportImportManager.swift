@@ -6,8 +6,6 @@
 //  Copyright © 2015 Ignacio Nieto Carvajal. All rights reserved.
 //
 
-import UIKit
-
 /* 
 
 EC keys: http://www.opensource.apple.com/source/security_certtool/security_certtool-55103/src/dumpasn1.cfg

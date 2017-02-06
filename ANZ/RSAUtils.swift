@@ -10,17 +10,39 @@ import Foundation
 
 class ANZRSAUtils {
     
+    var keychainAccessGroup: String? = nil
+    
+    var defaultKeychainQuery: [String: Any] {
+        
+        var query = [String: Any]()
+        
+        if let keychainAccessGroup = self.keychainAccessGroup {
+            query[String(kSecAttrAccessGroup)] = keychainAccessGroup
+        }
+        
+        return query
+    }
+    
     var publicKey, privateKey: SecKey?
     
     let tagPrivate = "com.anzkit.device.private"
     let tagPublic  = "com.anzkit.device.public"
     
-    var keySourceStr = ""
+    init(keychainAccessGroup: String?) {
+        
+        self.keychainAccessGroup = keychainAccessGroup
+        
+        if self.loadKeysFromKeychain() == false {
+            self.generateKeyPair()
+        }
+    }
     
-    func getKeysFromKeychain() -> Bool {
+    // MARK: Functions
+    
+    func loadKeysFromKeychain() -> Bool {
         privateKey = getKeyTypeInKeyChain(tag: tagPrivate)
         publicKey = getKeyTypeInKeyChain(tag: tagPublic)
-        return ((privateKey != nil)&&(publicKey != nil))
+        return ((privateKey != nil) && (publicKey != nil))
     }
     
     func keyTypeStr(tag: String) -> String {
@@ -29,13 +51,12 @@ class ANZRSAUtils {
     
     func getKeyTypeInKeyChain(tag : String) -> SecKey? {
         
-        let query: [String: Any] = [
-            String(kSecClass)             : kSecClassKey,
-            String(kSecAttrKeyType)       : kSecAttrKeyTypeRSA,
-            String(kSecAttrApplicationTag): tag,
-            String(kSecReturnRef)         : true
-        ]
-        
+        var query = self.defaultKeychainQuery
+        query[String(kSecClass)] = kSecClassKey
+        query[String(kSecAttrKeyType)] = kSecAttrKeyTypeRSA
+        query[String(kSecAttrApplicationTag)] = tag
+        query[String(kSecReturnRef)] = true
+
         var result : AnyObject?
         
         let status = SecItemCopyMatching(query as CFDictionary, &result)
@@ -49,17 +70,16 @@ class ANZRSAUtils {
         return nil
     }
     
-    
     func generateKeyPair() -> (publicKey: SecKey?, privateKey: SecKey?) {
         
         // TODO: Check if keys already exist?
         
         let keySize = 2048
         
-        var query: [String: Any] = [
-            String(kSecAttrKeyType)       : kSecAttrKeyTypeRSA,
-            String(kSecAttrKeySizeInBits) : keySize,
-        ]
+        var query = self.defaultKeychainQuery
+        
+        query[String(kSecAttrKeyType)] = kSecAttrKeyTypeRSA
+        query[String(kSecAttrKeySizeInBits)] = keySize
         
         query[String(kSecPrivateKeyAttrs)] = [
             String(kSecAttrIsPermanent)    : true,
@@ -91,15 +111,14 @@ class ANZRSAUtils {
     
     func storeInKeychain(tag: String, key: SecKey) {
         
-        let attribute = [
-            String(kSecClass)              : kSecClassKey,
-            String(kSecAttrKeyType)        : kSecAttrKeyTypeRSA,
-            String(kSecValueRef)           : key,
-            String(kSecAttrApplicationTag) : tag,
-            String(kSecReturnPersistentRef): true
-        ] as [String : Any]
-        
-        let status = SecItemAdd(attribute as CFDictionary, nil)
+        var query = self.defaultKeychainQuery
+        query[String(kSecClass)] = kSecClassKey
+        query[String(kSecAttrKeyType)] = kSecAttrKeyTypeRSA
+        query[String(kSecValueRef)] = key
+        query[String(kSecAttrApplicationTag)] = tag
+        query[String(kSecReturnPersistentRef)] = true
+
+        let status = SecItemAdd(query as CFDictionary, nil)
         
         if status != noErr {
             print("SecItemAdd Error!")
@@ -109,13 +128,12 @@ class ANZRSAUtils {
         print("\(keyTypeStr(tag: tag)) key added to keychain")
     }
 
-    func getPublicKey(_ tag: String) -> Data? {
+    func getPublicKey() -> Data? {
         
-        let query: [String: Any] = [
-            kSecClass as String: kSecClassKey,
-            kSecReturnData as String: true,
-            kSecAttrApplicationTag as String: tagPublic,
-        ]
+        var query = self.defaultKeychainQuery
+        query[String(kSecClass)] = kSecClassKey
+        query[String(kSecReturnData)] = true
+        query[String(kSecAttrApplicationTag)] = self.tagPublic
         
         var result: AnyObject?
         let status = withUnsafeMutablePointer(to: &result) { SecItemCopyMatching(query as CFDictionary, UnsafeMutablePointer($0)) }
@@ -131,9 +149,9 @@ class ANZRSAUtils {
         return nil
     }
     
-    func getPublicKeyDER(_ tag: String) -> Data? {
+    func getPublicKeyDER() -> Data? {
         
-        guard let keyData = self.getPublicKey(tag) else {
+        guard let keyData = self.getPublicKey() else {
             return nil
         }
         
@@ -144,9 +162,9 @@ class ANZRSAUtils {
     //Delete keys when required.
     func deleteAllKeysInKeyChain() {
         
-        let query : [String: AnyObject] = [
-            String(kSecClass)             : kSecClassKey
-        ]
+        var query = self.defaultKeychainQuery
+        query[String(kSecClass)] = kSecClassKey
+        
         let status = SecItemDelete(query as CFDictionary)
         
         switch status {

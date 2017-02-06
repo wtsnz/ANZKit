@@ -36,6 +36,7 @@ protocol ServiceType {
     
     /// The clients current session id
     var ibSessionId: String? { get }
+    
 }
 
 extension ServiceType {

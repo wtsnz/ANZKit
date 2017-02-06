@@ -46,23 +46,12 @@ class ViewController: UIViewController {
         guard let pin = passcodeTextField.text else {
             return
         }
-  
-        let utils = ANZRSAUtils()
 
-        let (publicKey, privateKey) = utils.generateKeyPair()
-        
-        let keystring = utils.getPublicKeyDER(utils.tagPublic)?.base64EncodedString()
-
-        print(keystring)
-
-        self.service.setPin(pin: pin, deviceDescription: "iphone", devicePublicKey: keystring!)
+        self.service.setPin(pin: pin, deviceDescription: "iphone")
             .subscribe(onNext: { (newDevice) in
                 
-                let deviceToken = utils.decryptBase64String(encryptedBase64String: newDevice.deviceToken)
-
                 dump(newDevice)
-                print(deviceToken)
-                
+
             }, onError: { (error) in
                 print(error)
             })
@@ -93,7 +82,6 @@ class ViewController: UIViewController {
             })
             .subscribe(onNext: { (devices, accounts) in
                 
-                
                 dump(devices)
                 dump(accounts)
                 
@@ -107,9 +95,25 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.service
+            .authenticate(withUsername: Secrets.username, password: Secrets.password)
+            .subscribe(onNext: { [weak service] (session) in
+                dump(session)
+                }, onError: { (error) in
+                    print(error)
+            })
+            .addDisposableTo(self.disposeBag)
+        
+        return;
+        
         // Generate Device Certificate Pair
 
-        let deviceToken = ""
+        // private Key existed!
+        // ▿ (2 elements)
+        // - .0: "Ulp8kr9z"
+        // - .1: "a137d982-66fb-46fd-865f-13b900e7bc6e"
+        
+        let deviceToken = "46b4677e-beee-4bc4-9203-36f54c8d5aff"
         let devicePin = ""
         
         self.service
@@ -124,16 +128,7 @@ class ViewController: UIViewController {
         return;
         
 
-        self.service
-            .authenticate(withUsername: Secrets.username, password: Secrets.password)
-            .subscribe(onNext: { [weak service] (session) in
-                dump(session)
-                }, onError: { (error) in
-                    print(error)
-            })
-            .addDisposableTo(self.disposeBag)
-        
-        return;
+
         
     }
 

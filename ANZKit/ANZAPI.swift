@@ -46,7 +46,10 @@ public class ANZService: ServiceType {
     public var accessToken: String?
     
     public var ibSessionId: String?
-    
+
+    // TODO: Add to protocol and stub
+    let rsaUtils = ANZRSAUtils(keychainAccessGroup: nil)
+
     private static let session = URLSession(configuration: .default)
     let scheduler: OperationQueueScheduler
     
@@ -65,6 +68,10 @@ public class ANZService: ServiceType {
         operationQueue.maxConcurrentOperationCount = 1
         
         self.scheduler = OperationQueueScheduler(operationQueue: operationQueue)
+        
+        // Create certificates
+        
+        
     }
     
     fileprivate func jsonRequest(route: RouteType) -> Observable<Any> {
@@ -164,10 +171,9 @@ extension ANZService {
     public func currentPublicKey() -> Observable<PublicKey> {
         
         let route = PreAuthRoute.publicKeys
-        let request = self.request(route: route)
         
         return self
-            .jsonRequest(request: request)
+            .jsonRequest(route: route)
             .flatMap { (jsonData) -> Observable<PublicKey> in
                 guard let publicKey = try? ResponseParser.parseCurrentPublicKeyResponse(responseData: jsonData) else {
                     return Observable.error(ServiceError.couldNotParseJSON)
@@ -179,7 +185,6 @@ extension ANZService {
     public func session(withDeviceToken deviceToken: String, pin: String) -> Observable<Session> {
         
         return self.currentPublicKey()
-            .debug()
             .flatMap { (publicKey) in
                 return self.preAuthenticate(deviceToken: deviceToken, pin: pin, publicKey: publicKey)
             }
@@ -295,7 +300,11 @@ extension ANZService {
     
     // MARK: Pins
     
-    public func setPin(pin: String, deviceDescription: String, devicePublicKey: String) -> Observable<NewDevice> {
+    public func setPin(pin: String, deviceDescription: String) -> Observable<NewDevice> {
+
+        guard let devicePublicKey = self.rsaUtils.getPublicKeyDER()?.base64EncodedString() else {
+            return Observable.error(ResponseParserError.UnknownResponseFormat)
+        }
         
         return self.currentPublicKey()
             .flatMap { (publicKey) -> Observable<Any> in
@@ -308,9 +317,8 @@ extension ANZService {
                 
                 return self.jsonRequest(route: route)
             }
-        
             .flatMap { (jsonData) -> Observable<NewDevice> in
-                guard let newDevice = try? ResponseParser.parseNewDeviceResponse(responseData: jsonData) else {
+                guard let newDevice = try? ResponseParser.parseNewDeviceResponse(responseData: jsonData, rsaUtils: self.rsaUtils) else {
                     return Observable.error(ServiceError.couldNotParseJSON)
                 }
                 return Observable.just(newDevice)
@@ -322,10 +330,6 @@ extension ANZService {
     
     public func encryptString(string: String, withPublicKey publicKey: PublicKey) -> String? {
         return try? SwiftyRSA.encryptString(string, publicKeyPEM: publicKey.key)
-    }
-    
-    public func decryptString(string: String, withPrivateKeyPEM privateKeyPEM: String) -> String? {
-        return try? SwiftyRSA.decryptString(string, privateKeyPEM: privateKeyPEM)
     }
     
 }

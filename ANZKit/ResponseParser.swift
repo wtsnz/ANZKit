@@ -11,6 +11,7 @@ import Foundation
 public enum ResponseParserError: Error {
     
     case UnknownResponseFormat
+    case FailedToDecrypt
     
 }
 
@@ -109,7 +110,7 @@ public struct ResponseParser {
         return accounts
     }
     
-    static public func parseDevicesResponse(responseData: Any?) throws -> [Device] {
+    static internal func parseDevicesResponse(responseData: Any?) throws -> [Device] {
         
         guard let responseData = responseData else {
             throw ResponseParserError.UnknownResponseFormat
@@ -128,9 +129,7 @@ public struct ResponseParser {
         return devices
     }
     
-    
-    
-    static public func parseNewDeviceResponse(responseData: Any?) throws -> NewDevice {
+    static internal func parseNewDeviceResponse(responseData: Any?, rsaUtils: ANZRSAUtils) throws -> NewDevice {
         
         guard let responseData = responseData else {
             throw ResponseParserError.UnknownResponseFormat
@@ -148,8 +147,12 @@ public struct ResponseParser {
             throw ResponseParserError.UnknownResponseFormat
         }
         
-        guard let deviceToken = newDevice["deviceToken"] as? String else {
+        guard let encryptedDeviceToken = newDevice["deviceToken"] as? String else {
             throw ResponseParserError.UnknownResponseFormat
+        }
+        
+        guard let deviceToken = rsaUtils.decryptBase64String(encryptedBase64String: encryptedDeviceToken) else {
+            throw ResponseParserError.FailedToDecrypt
         }
         
         return (deviceKey: deviceKey, deviceToken: deviceToken)
