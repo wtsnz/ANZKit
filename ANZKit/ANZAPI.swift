@@ -117,16 +117,15 @@ public class ANZService: ServiceType {
         }
     }
     
-    fileprivate func authenticate(userId: String, password: String, publicKey: PublicKey) -> Observable<String> {
+    fileprivate func preAuthenticate(userId: String, password: String, publicKey: PublicKey) -> Observable<String> {
 
         guard let encryptedPassword = self.encryptString(string: password, withPublicKey: publicKey) else {
             return Observable.error(ResponseParserError.UnknownResponseFormat)
         }
         
         let route = PreAuthRoute.authenticate(method: .usernamePassword(password: encryptedPassword, userId: userId, publicKeyId: publicKey.id))
-        let request = self.request(route: route)
         
-        return self.jsonRequest(request: request)
+        return self.jsonRequest(route: route)
             .flatMap { (jsonData) -> Observable<String> in
                 
                 guard let publicKey = try? ResponseParser.parseAuthenticateTokenResponse(responseData: jsonData) else {
@@ -136,6 +135,27 @@ public class ANZService: ServiceType {
                 return Observable.just(publicKey)
         }
         
+    }
+    
+    fileprivate func preAuthenticate(deviceToken: String, pin: String, publicKey: PublicKey) -> Observable<String> {
+        
+        guard let encryptedPin = self.encryptString(string: pin, withPublicKey: publicKey) else {
+            return Observable.error(ResponseParserError.UnknownResponseFormat)
+        }
+        
+        guard let encryptedDeviceToken = self.encryptString(string: deviceToken, withPublicKey: publicKey) else {
+            return Observable.error(ResponseParserError.UnknownResponseFormat)
+        }
+        
+        let route = PreAuthRoute.authenticate(method: .deviceTokenPin(deviceToken: encryptedDeviceToken, pin: encryptedPin, publicKeyId: publicKey.id))
+        
+        return self.jsonRequest(route: route)
+            .flatMap({ (jsonData) -> Observable<String> in
+                guard let token = try? ResponseParser.parseAuthenticateTokenResponse(responseData: jsonData) else {
+                    return Observable.error(ServiceError.couldNotParseJSON)
+                }
+                return Observable.just(token)
+            })
     }
 }
 
@@ -156,15 +176,33 @@ extension ANZService {
         }
     }
     
-    public func authenticate(withUsername username: String, password: String) -> Observable<Session> {
+    public func session(withDeviceToken deviceToken: String, pin: String) -> Observable<Session> {
+        
         return self.currentPublicKey()
+            .debug()
             .flatMap { (publicKey) in
-                return self.authenticate(userId: username, password: password, publicKey: publicKey)
+                return self.preAuthenticate(deviceToken: deviceToken, pin: pin, publicKey: publicKey)
             }
             .do(onNext: { (accessToken) in
                 self.accessToken = accessToken
             })
-            .flatMap({ (authToken) in
+            .flatMap({ (accessToken) in
+                return self.currentPublicKey()
+            })
+            .flatMap({ (publicKey) in
+                return self.getSession(deviceToken: deviceToken, publicKey: publicKey)
+            })
+    }
+    
+    public func authenticate(withUsername username: String, password: String) -> Observable<Session> {
+        return self.currentPublicKey()
+            .flatMap { (publicKey) in
+                return self.preAuthenticate(userId: username, password: password, publicKey: publicKey)
+            }
+            .do(onNext: { (accessToken) in
+                self.accessToken = accessToken
+            })
+            .flatMap({ (accessToken) in
                 return self.getSession()
             })
     }
@@ -203,6 +241,28 @@ extension ANZService {
             })
     }
     
+    public func getSession(deviceToken: String, publicKey: PublicKey) -> Observable<Session> {
+        
+        guard let encryptedDeviceToken = self.encryptString(string: deviceToken, withPublicKey: publicKey) else {
+            return Observable.error(ResponseParserError.UnknownResponseFormat)
+        }
+        
+        let route = Route.sessions(method: Route.SessionMethod.withDeviceToken(deviceToken: encryptedDeviceToken, publicKeyId: publicKey.id))
+        
+        return self.jsonRequest(route: route)
+            .flatMap { (jsonData) -> Observable<Session> in
+                guard let session = try? ResponseParser.parseSessionResponse(responseData: jsonData) else {
+                    return Observable.error(ServiceError.couldNotParseJSON)
+                }
+                return Observable.just(session)
+            }
+            .do(onNext: { [weak self] (session) in
+                self?.ibSessionId = session.ibSessionId
+            })
+    }
+    
+    // MARK: Accounts
+    
     public func getAccounts(showInvestmentSchemes: Bool = true) -> Observable<[Account]> {
         
         let route = Route.accounts(showInvestmentSchemes: showInvestmentSchemes)
@@ -216,6 +276,8 @@ extension ANZService {
                 return Observable.just(accounts)
         }
     }
+    
+    // MARK: Devices
     
     public func getDevices() -> Observable<[Device]> {
         
@@ -231,29 +293,39 @@ extension ANZService {
         }
     }
     
-    /**
-    public func setPin(pin: String, deviceDescription: String, devicePublicKey: String) -> Observable<[Device]> {
+    // MARK: Pins
+    
+    public func setPin(pin: String, deviceDescription: String, devicePublicKey: String) -> Observable<NewDevice> {
         
-        let route = Route.setPin(pin: encryptedPin, publicKeyId: <#T##Int#>, deviceName: <#T##String#>, devicePublicKey: <#T##String#>)
-        let request = self.request(route: route)
+        return self.currentPublicKey()
+            .flatMap { (publicKey) -> Observable<Any> in
+                
+                guard let encryptedPin = self.encryptString(string: pin, withPublicKey: publicKey) else {
+                    return Observable.error(ResponseParserError.UnknownResponseFormat)
+                }
+                
+                let route = Route.setPin(pin: encryptedPin, publicKeyId: publicKey.id, deviceName: deviceDescription, devicePublicKey: devicePublicKey)
+                
+                return self.jsonRequest(route: route)
+            }
         
-        return self
-            .jsonRequest(request: request)
-            .flatMap { (jsonData) -> Observable<[Device]> in
-                guard let devices = try? ResponseParser.parseDevicesResponse(responseData: jsonData) else {
+            .flatMap { (jsonData) -> Observable<NewDevice> in
+                guard let newDevice = try? ResponseParser.parseNewDeviceResponse(responseData: jsonData) else {
                     return Observable.error(ServiceError.couldNotParseJSON)
                 }
-                return Observable.just(devices)
-        }
+                return Observable.just(newDevice)
+            }
     }
-    */
-    
 }
 
 extension ANZService {
     
     public func encryptString(string: String, withPublicKey publicKey: PublicKey) -> String? {
         return try? SwiftyRSA.encryptString(string, publicKeyPEM: publicKey.key)
+    }
+    
+    public func decryptString(string: String, withPrivateKeyPEM privateKeyPEM: String) -> String? {
+        return try? SwiftyRSA.decryptString(string, privateKeyPEM: privateKeyPEM)
     }
     
 }

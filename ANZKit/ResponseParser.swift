@@ -14,6 +14,8 @@ public enum ResponseParserError: Error {
     
 }
 
+public typealias NewDevice = (deviceKey: String, deviceToken: String)
+
 public struct ResponseParser {
     
     static public func parseErrorResponse(responseData: Any?) throws -> ANZError {
@@ -124,6 +126,33 @@ public struct ResponseParser {
         let devices = devicesArray.flatMap({ Device.init(jsonDictionary: $0) })
         
         return devices
+    }
+    
+    
+    
+    static public func parseNewDeviceResponse(responseData: Any?) throws -> NewDevice {
+        
+        guard let responseData = responseData else {
+            throw ResponseParserError.UnknownResponseFormat
+        }
+        
+        guard let json = responseData as? [String: Any] else {
+            throw ResponseParserError.UnknownResponseFormat
+        }
+        
+        guard let newDevice = json["newDevice"] as? [String: Any] else {
+            throw ResponseParserError.UnknownResponseFormat
+        }
+        
+        guard let deviceKey = newDevice["key"] as? String else {
+            throw ResponseParserError.UnknownResponseFormat
+        }
+        
+        guard let deviceToken = newDevice["deviceToken"] as? String else {
+            throw ResponseParserError.UnknownResponseFormat
+        }
+        
+        return (deviceKey: deviceKey, deviceToken: deviceToken)
     }
     
 }

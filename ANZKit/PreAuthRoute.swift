@@ -124,7 +124,7 @@ internal enum Route: RouteType {
                 ]
             ]
             
-            return (.get, .standard, "/accounts", parameters)
+            return (.post, .standard, "/pins/verify", parameters)
         }
     }
 }

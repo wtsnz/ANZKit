@@ -20,7 +20,7 @@ class ViewController: UIViewController {
         
         let serverConfig = ServerConfig.production
         
-        let deviceId = "ad375799-7bc6-4d3a-b0a3-bed6e7ff4094" // NSUUID().uuidString
+        let deviceId = "EA06918A-844A-4BB8-B053-0827CE0E43B1"//"ad375799-7bc6-4d3a-b0a3-bed6e7ff4094" // NSUUID().uuidString
         let requestId = 5000
         
         let service = ANZService(
@@ -38,7 +38,37 @@ class ViewController: UIViewController {
         return service
     }()
     
+    @IBOutlet weak var passcodeTextField: UITextField!
     @IBOutlet weak var smsCodeTextField: UITextField!
+    
+    @IBAction func touchedCreatePasscode(_ sender: Any) {
+        
+        guard let pin = passcodeTextField.text else {
+            return
+        }
+  
+        let utils = ANZRSAUtils()
+
+        let (publicKey, privateKey) = utils.generateKeyPair()
+        
+        let keystring = utils.getPublicKeyDER(utils.tagPublic)?.base64EncodedString()
+
+        print(keystring)
+
+        self.service.setPin(pin: pin, deviceDescription: "iphone", devicePublicKey: keystring!)
+            .subscribe(onNext: { (newDevice) in
+                
+                let deviceToken = utils.decryptBase64String(encryptedBase64String: newDevice.deviceToken)
+
+                dump(newDevice)
+                print(deviceToken)
+                
+            }, onError: { (error) in
+                print(error)
+            })
+            .addDisposableTo(self.disposeBag)
+        
+    }
     
     @IBAction func tappedAuth(_ sender: Any) {
         
@@ -63,27 +93,47 @@ class ViewController: UIViewController {
             })
             .subscribe(onNext: { (devices, accounts) in
                 
+                
                 dump(devices)
                 dump(accounts)
                 
             }, onError: { (error) in
                 print(error)
             })
-        .addDisposableTo(self.disposeBag)
+            .addDisposableTo(self.disposeBag)
         
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Generate Device Certificate Pair
+
+        let deviceToken = ""
+        let devicePin = ""
+        
         self.service
-            .authenticate(withUsername: Secrets.username, password: Secrets.password)
+            .session(withDeviceToken: deviceToken, pin: devicePin)
             .subscribe(onNext: { [weak service] (session) in
                 dump(session)
             }, onError: { (error) in
                 print(error)
             })
             .addDisposableTo(self.disposeBag)
+        
+        return;
+        
+
+        self.service
+            .authenticate(withUsername: Secrets.username, password: Secrets.password)
+            .subscribe(onNext: { [weak service] (session) in
+                dump(session)
+                }, onError: { (error) in
+                    print(error)
+            })
+            .addDisposableTo(self.disposeBag)
+        
+        return;
         
     }
 
