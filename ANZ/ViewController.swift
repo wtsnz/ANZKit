@@ -29,7 +29,7 @@ class ViewController: UIViewController {
             apiKey: "41b4c957-56c8-4f0a-9ed6-bab90a43fcf5",
             userAgent: "goMoney NZ/5.8.1/wifi/samsung SM-G900F/4.4.2/landscape/",
             deviceId: deviceId,
-            deviceDescription: "SM-G900F",
+            deviceDescription: "iPhone",
             deviceApiVersion: "19",
             accessToken: nil,
             ibSessionId: nil
@@ -47,7 +47,7 @@ class ViewController: UIViewController {
             return
         }
 
-        self.service.setPin(pin: pin, deviceDescription: "iphone")
+        self.service.setPin(pin: pin)
             .subscribe(onNext: { (newDevice) in
                 
                 dump(newDevice)
@@ -126,9 +126,6 @@ class ViewController: UIViewController {
             .addDisposableTo(self.disposeBag)
         
         return;
-        
-
-
         
     }
 

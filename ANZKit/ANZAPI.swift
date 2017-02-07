@@ -71,7 +71,6 @@ public class ANZService: ServiceType {
         
         // Create certificates
         
-        
     }
     
     fileprivate func jsonRequest(route: RouteType) -> Observable<Any> {
@@ -300,8 +299,10 @@ extension ANZService {
     
     // MARK: Pins
     
-    public func setPin(pin: String, deviceDescription: String) -> Observable<NewDevice> {
+    public func setPin(pin: String) -> Observable<NewDevice> {
 
+        let deviceDescription = self.deviceDescription
+        
         guard let devicePublicKey = self.rsaUtils.getPublicKeyDER()?.base64EncodedString() else {
             return Observable.error(ResponseParserError.UnknownResponseFormat)
         }

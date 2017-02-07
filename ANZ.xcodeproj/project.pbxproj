@@ -76,6 +76,16 @@
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		BEF8CBDF1E49B8D40031EF9A /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
@@ -115,6 +125,7 @@
 		BECA0BC71E3DEF5F00946B50 /* PreAuthRoute.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreAuthRoute.swift; sourceTree = "<group>"; };
 		BEEC0FA51E2386E500314EC6 /* ANZAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ANZAPI.swift; sourceTree = "<group>"; };
 		BEEC0FA71E2388DE00314EC6 /* PublicKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublicKey.swift; sourceTree = "<group>"; };
+		BEF8CC1A1E49BC550031EF9A /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS3.1.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -157,10 +168,8 @@
 		BE059F4E1E2375C800789981 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				BECA0BBD1E3DE40600946B50 /* RxCocoa.framework */,
-				BE059F551E2375F800789981 /* SwiftyRSA.framework */,
-				BE059F521E2375F100789981 /* RxSwift.framework */,
-				BE059F4F1E2375E900789981 /* Alamofire.framework */,
+				BEF8CC1A1E49BC550031EF9A /* Security.framework */,
+				BEF8CC101E49BC290031EF9A /* iOS */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -300,6 +309,17 @@
 			name = Models;
 			sourceTree = "<group>";
 		};
+		BEF8CC101E49BC290031EF9A /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				BECA0BBD1E3DE40600946B50 /* RxCocoa.framework */,
+				BE059F551E2375F800789981 /* SwiftyRSA.framework */,
+				BE059F521E2375F100789981 /* RxSwift.framework */,
+				BE059F4F1E2375E900789981 /* Alamofire.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -323,6 +343,7 @@
 				BE884C021E22275B009D253F /* Resources */,
 				BE884C2A1E222788009D253F /* Embed Frameworks */,
 				BE059F581E23761B00789981 /* Carthage */,
+				BEF8CBDF1E49B8D40031EF9A /* Embed Watch Content */,
 			);
 			buildRules = (
 			);
@@ -699,6 +720,7 @@
 		BE884C281E222788009D253F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CURRENT_PROJECT_VERSION = 1;
@@ -717,6 +739,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = io.townsend.ANZKit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -728,6 +751,7 @@
 		BE884C291E222788009D253F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CURRENT_PROJECT_VERSION = 1;
@@ -746,6 +770,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = io.townsend.ANZKit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
