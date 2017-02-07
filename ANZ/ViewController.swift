@@ -20,7 +20,12 @@ class ViewController: UIViewController {
         
         let serverConfig = ServerConfig.production
         
+        // Load device id, or create if doesn't exist
+        
         let deviceId = "EA06918A-844A-4BB8-B053-0827CE0E43B1"//"ad375799-7bc6-4d3a-b0a3-bed6e7ff4094" // NSUUID().uuidString
+        
+        // Load request number
+        
         let requestId = 5000
         
         let service = ANZService(
@@ -95,10 +100,6 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.service
-            .authenticate(withUsername: Secrets.username, password: Secrets.password)
-            .subscribe(onNext: { [weak service] (session) in
-                dump(session)
                 }, onError: { (error) in
                     print(error)
             })
@@ -108,24 +109,7 @@ class ViewController: UIViewController {
         
         // Generate Device Certificate Pair
 
-        // private Key existed!
-        // ▿ (2 elements)
-        // - .0: "Ulp8kr9z"
-        // - .1: "a137d982-66fb-46fd-865f-13b900e7bc6e"
-        
-        let deviceToken = "46b4677e-beee-4bc4-9203-36f54c8d5aff"
-        let devicePin = ""
-        
-        self.service
-            .session(withDeviceToken: deviceToken, pin: devicePin)
-            .subscribe(onNext: { [weak service] (session) in
-                dump(session)
-            }, onError: { (error) in
-                print(error)
-            })
-            .addDisposableTo(self.disposeBag)
-        
-        return;
+
         
     }
 
