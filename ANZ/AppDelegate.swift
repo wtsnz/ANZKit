@@ -8,11 +8,13 @@
 
 import UIKit
 import WatchConnectivity
+import ANZKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var appCoordinator: AppCoordinator!
 
     var session: WCSession? {
         didSet {
@@ -22,16 +24,52 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
     }
-
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         if WCSession.isSupported() {
             session = WCSession.default()
         }
         
+        let localDataService = LocalDataService()
+        let anzService = self.anzService(using: localDataService)
+        
+        let appContext = AppContext(apiService: anzService, localDataService: localDataService)
+        
+        self.window = UIWindow(frame: UIScreen.main.bounds)
+        self.appCoordinator = AppCoordinator(window: self.window!, context: appContext)
+        self.appCoordinator.start()
+        
         return true
     }
 
+    func anzService(using dataService: LocalDataService) -> ANZService {
+        
+        let serverConfig = ServerConfig.production
+        
+        // Load device id, or create if doesn't exist
+        
+        let deviceId = "EA06918A-844A-4BB8-B053-0827CE0E43B1"//"ad375799-7bc6-4d3a-b0a3-bed6e7ff4094" // NSUUID().uuidString
+        
+        // Load request number
+        
+        let requestId = 5000
+        
+        let service = ANZService(
+            serverConfig: serverConfig,
+            requestId: requestId,
+            apiKey: "41b4c957-56c8-4f0a-9ed6-bab90a43fcf5",
+            userAgent: "goMoney NZ/5.8.1/wifi/samsung SM-G900F/4.4.2/landscape/",
+            deviceId: deviceId,
+            deviceDescription: "iPhone",
+            deviceApiVersion: "19",
+            accessToken: nil,
+            ibSessionId: nil
+        )
+        
+        return service
+    }
+    
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.

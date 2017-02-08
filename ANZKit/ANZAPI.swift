@@ -47,6 +47,25 @@ public class ANZService: ServiceType {
     
     public var ibSessionId: String?
 
+    public var deviceToken: String? {
+        
+        get {
+            return self.rsaUtils.deviceToken
+        }
+        set {
+            self.rsaUtils.deviceToken = newValue
+        }
+        
+    }
+    
+    /// Whether or not the service has a device token to attempt
+    /// to fetch a session from the device token + pin
+    public var hasDeviceToken: Bool {
+        return self.deviceToken != nil
+    }
+    
+    
+    
     // TODO: Add to protocol and stub
     let rsaUtils = ANZRSAUtils(keychainAccessGroup: nil)
 
@@ -324,6 +343,11 @@ extension ANZService {
                 }
                 return Observable.just(newDevice)
             }
+            .do(onNext: { [weak self] (newDevice) in
+                self?.rsaUtils.deviceToken = newDevice.deviceToken
+            }, onError: { [weak self] (error) in
+                self?.rsaUtils.deviceToken = nil
+            })
     }
 }
 

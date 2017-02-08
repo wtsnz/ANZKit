@@ -18,6 +18,13 @@
 		BE17C86B1E487E8400F83D55 /* RSAUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE054FF51E431AAF00DB4B65 /* RSAUtils.swift */; };
 		BE17C86C1E48808500F83D55 /* CryptoExportImportManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE17C8681E4847D800F83D55 /* CryptoExportImportManager.swift */; };
 		BE1F43A51E39F571001259B1 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1F43A41E39F571001259B1 /* Parser.swift */; };
+		BE2F10621E4B008E00398D72 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE2F10611E4B008E00398D72 /* Coordinator.swift */; };
+		BE2F10641E4B00B000398D72 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE2F10631E4B00B000398D72 /* AppCoordinator.swift */; };
+		BE2F10661E4B00D000398D72 /* Services.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE2F10651E4B00D000398D72 /* Services.swift */; };
+		BE2F10681E4B00FF00398D72 /* RootViewCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE2F10671E4B00FF00398D72 /* RootViewCoordinator.swift */; };
+		BE2F106A1E4B0B0F00398D72 /* RSAUtilsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE2F10691E4B0B0F00398D72 /* RSAUtilsTests.swift */; };
+		BE2F106D1E4B207F00398D72 /* KeychainWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE2F106C1E4B207F00398D72 /* KeychainWrapper.swift */; };
+		BE2F106F1E4B20D200398D72 /* KeychainOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE2F106E1E4B20D200398D72 /* KeychainOptions.swift */; };
 		BE884C081E22275B009D253F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE884C071E22275B009D253F /* AppDelegate.swift */; };
 		BE884C0A1E22275B009D253F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE884C091E22275B009D253F /* ViewController.swift */; };
 		BE884C0D1E22275B009D253F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BE884C0B1E22275B009D253F /* Main.storyboard */; };
@@ -132,6 +139,13 @@
 		BE17C8681E4847D800F83D55 /* CryptoExportImportManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CryptoExportImportManager.swift; path = ../ANZ/CryptoExportImportManager.swift; sourceTree = "<group>"; };
 		BE17C86A1E4878BF00F83D55 /* ANZ.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ANZ.entitlements; sourceTree = "<group>"; };
 		BE1F43A41E39F571001259B1 /* Parser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
+		BE2F10611E4B008E00398D72 /* Coordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		BE2F10631E4B00B000398D72 /* AppCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		BE2F10651E4B00D000398D72 /* Services.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Services.swift; sourceTree = "<group>"; };
+		BE2F10671E4B00FF00398D72 /* RootViewCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootViewCoordinator.swift; sourceTree = "<group>"; };
+		BE2F10691E4B0B0F00398D72 /* RSAUtilsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSAUtilsTests.swift; sourceTree = "<group>"; };
+		BE2F106C1E4B207F00398D72 /* KeychainWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainWrapper.swift; sourceTree = "<group>"; };
+		BE2F106E1E4B20D200398D72 /* KeychainOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainOptions.swift; sourceTree = "<group>"; };
 		BE884C041E22275B009D253F /* ANZ.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ANZ.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE884C071E22275B009D253F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BE884C091E22275B009D253F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -261,6 +275,10 @@
 				BE884C101E22275B009D253F /* LaunchScreen.storyboard */,
 				BE884C131E22275B009D253F /* Info.plist */,
 				BECA0BB71E3DCDAD00946B50 /* Secrets.swift */,
+				BE2F10611E4B008E00398D72 /* Coordinator.swift */,
+				BE2F10631E4B00B000398D72 /* AppCoordinator.swift */,
+				BE2F10651E4B00D000398D72 /* Services.swift */,
+				BE2F10671E4B00FF00398D72 /* RootViewCoordinator.swift */,
 			);
 			path = ANZ;
 			sourceTree = "<group>";
@@ -268,6 +286,8 @@
 		BE884C1F1E222788009D253F /* ANZKit */ = {
 			isa = PBXGroup;
 			children = (
+				BE2F106E1E4B20D200398D72 /* KeychainOptions.swift */,
+				BE2F106C1E4B207F00398D72 /* KeychainWrapper.swift */,
 				BE17C8681E4847D800F83D55 /* CryptoExportImportManager.swift */,
 				BE054FF51E431AAF00DB4B65 /* RSAUtils.swift */,
 				BEEC0FA91E23896700314EC6 /* Models */,
@@ -291,6 +311,7 @@
 				BECA0B9D1E3D401900946B50 /* ANZKitTests.swift */,
 				BECA0B9F1E3D401900946B50 /* Info.plist */,
 				BECA0BB31E3D422000946B50 /* ResponseParserTests.swift */,
+				BE2F10691E4B0B0F00398D72 /* RSAUtilsTests.swift */,
 			);
 			path = ANZKitTests;
 			sourceTree = SOURCE_ROOT;
@@ -459,6 +480,7 @@
 				BECA0B981E3D401900946B50 /* Frameworks */,
 				BECA0B991E3D401900946B50 /* Resources */,
 				BECA0BAA1E3D40AA00946B50 /* Carthage */,
+				BE2F106B1E4B0CAB00398D72 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -634,6 +656,19 @@
 			shellPath = /bin/sh;
 			shellScript = "/usr/local/bin/carthage copy-frameworks";
 		};
+		BE2F106B1E4B0CAB00398D72 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "echo \"codesign --verify --force --sign \\\"$CODE_SIGN_IDENTITY\\\" \\\"$CODESIGNING_FOLDER_PATH\\\"\"\nIDENTITIES=`security find-identity -v -s \"Code Signing\" | grep \"iPhone Developer\" | awk '{ print $2 }'`\n\nfor SHA in $IDENTITIES; do\ncodesign --verify --force --sign $SHA \"$CODESIGNING_FOLDER_PATH\"\nif [ $? -eq 0 ]; then\necho \"Matching identity found: $SHA\"\nexit 0\nfi\ndone;\n\nexit 1";
+		};
 		BECA0BAA1E3D40AA00946B50 /* Carthage */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -643,6 +678,7 @@
 				"$(SRCROOT)/Carthage/Build/iOS/SwiftyRSA.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/RxSwift.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Alamofire.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/RxCocoa.framework",
 			);
 			name = Carthage;
 			outputPaths = (
@@ -658,7 +694,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BE2F10621E4B008E00398D72 /* Coordinator.swift in Sources */,
+				BE2F10681E4B00FF00398D72 /* RootViewCoordinator.swift in Sources */,
+				BE2F10661E4B00D000398D72 /* Services.swift in Sources */,
 				BE884C0A1E22275B009D253F /* ViewController.swift in Sources */,
+				BE2F10641E4B00B000398D72 /* AppCoordinator.swift in Sources */,
 				BECA0BB81E3DCDAD00946B50 /* Secrets.swift in Sources */,
 				BE884C081E22275B009D253F /* AppDelegate.swift in Sources */,
 			);
@@ -676,7 +716,9 @@
 				BECA0BBA1E3DCF7F00946B50 /* Session.swift in Sources */,
 				BECA0BC01E3DE87200946B50 /* ANZError.swift in Sources */,
 				BECA0BC81E3DEF5F00946B50 /* PreAuthRoute.swift in Sources */,
+				BE2F106F1E4B20D200398D72 /* KeychainOptions.swift in Sources */,
 				BEEC0FA61E2386E500314EC6 /* ANZAPI.swift in Sources */,
+				BE2F106D1E4B207F00398D72 /* KeychainWrapper.swift in Sources */,
 				BE17C86C1E48808500F83D55 /* CryptoExportImportManager.swift in Sources */,
 				BECA0BC41E3DEF0700946B50 /* ServerConfig.swift in Sources */,
 				BECA0BC61E3DEF4800946B50 /* RouteType.swift in Sources */,
@@ -691,6 +733,7 @@
 			files = (
 				BECA0B9E1E3D401900946B50 /* ANZKitTests.swift in Sources */,
 				BECA0BB41E3D422000946B50 /* ResponseParserTests.swift in Sources */,
+				BE2F106A1E4B0B0F00398D72 /* RSAUtilsTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1095,6 +1138,7 @@
 				BEF8CC3D1E49BDBF0031EF9A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		BEF8CC3F1E49BDBF0031EF9A /* Build configuration list for PBXNativeTarget "ANZWatch" */ = {
 			isa = XCConfigurationList;
@@ -1103,6 +1147,7 @@
 				BEF8CC411E49BDBF0031EF9A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -10,6 +10,8 @@ import Foundation
 
 class ANZRSAUtils {
     
+    let keychainWrapper = KeychainWrapper(serviceName: "device.token")
+    
     var keychainAccessGroup: String? = nil
     
     var defaultKeychainQuery: [String: Any] {
@@ -25,8 +27,27 @@ class ANZRSAUtils {
     
     var publicKey, privateKey: SecKey?
     
+    var deviceToken: String? {
+        
+        get {
+            return self.keychainWrapper.string(forKey: tagDeviceId, withOptions: nil)
+        }
+        set {
+            
+            if let newValue = newValue {
+                self.keychainWrapper.setString(newValue, forKey: tagDeviceId)
+            } else {
+                self.keychainWrapper.removeObject(forKey: tagDeviceId)
+            }
+            
+            
+        }
+    
+    }
+    
     let tagPrivate = "com.anzkit.device.private"
     let tagPublic  = "com.anzkit.device.public"
+    let tagDeviceId = "com.anzkit.device.id"
     
     init(keychainAccessGroup: String?) {
         
@@ -36,6 +57,118 @@ class ANZRSAUtils {
             self.generateKeyPair()
         }
     }
+    
+    // MARK: Device Functions
+//    
+//    func loadDeviceTokenFromKeychain() -> String? {
+//        
+//        // Instantiate a new default keychain query
+//        // Tell the query to return a result
+//        // Limit our results to one item
+//        
+//        let service = "device.token"
+//        
+//        var query = self.defaultKeychainQuery
+//        query[String(kSecClass)] = kSecClassGenericPassword
+//        query[String(kSecAttrAccount)] = tagDeviceId
+//        query[String(kSecAttrService)] = service as CFString
+////        query[String(kSecAttrApplicationTag)] = tagDeviceId
+//        query[String(kSecReturnData)] = kCFBooleanTrue
+////        query[String(kSecMatchLimit)] = kSecMatchLimitOne
+//        
+//        var result: AnyObject?
+//        
+//        let status = withUnsafeMutablePointer(to: &result) {
+//            SecItemCopyMatching(query as CFDictionary, UnsafeMutablePointer($0))
+//        }
+//        
+//        if status == errSecSuccess {
+//            print("device token exists!")
+//            
+//            if let retrievedData = result as? Data {
+//                return String(data: retrievedData, encoding: .utf8)
+//            }
+//            
+//        }
+//        
+//        print("nodecive token")
+//        
+//        return nil
+//        
+////        var dataTypeRef: AnyObject?
+////        
+////        // Search for the keychain items
+////        let status: OSStatus = SecItemCopyMatching(query as CFDictionary, &dataTypeRef)
+////        var contentsOfKeychain: String? = nil
+////        
+////        if status == errSecSuccess {
+////            if let retrievedData = dataTypeRef as? Data {
+////                contentsOfKeychain = String(data: retrievedData, encoding: .utf8)
+////            }
+////        } else {
+////            print("Nothing was retrieved from the keychain. Status code \(status)")
+////        }
+//        
+////        return contentsOfKeychain
+//    }
+//    
+//    func saveDeviceDeviceToken(deviceToken: String?) {
+//        
+//        guard let deviceToken = deviceToken else {
+//            self.deleteDeviceToken()
+//            return
+//        }
+//        
+//        let service = "device.token"
+//
+//        
+//        let data = deviceToken.data(using: .utf8)
+//        
+//        var query = self.defaultKeychainQuery
+//        query[String(kSecClass)] = kSecClassGenericPassword
+//        query[String(kSecAttrAccount)] = tagDeviceId
+//        query[String(kSecAttrService)] = service as CFString
+////        query[String(kSecAttrApplicationTag)] = tagDeviceId
+//        query[String(kSecValueData)] = data
+//        query[String(kSecMatchLimit)] = kSecMatchLimitOne
+//        
+//        // Delete any existing items
+//        SecItemDelete(query as CFDictionary)
+//        
+//        // Add the new keychain item
+//        
+//        let status: OSStatus = SecItemAdd(query as CFDictionary, nil)
+//        
+//        if status == errSecSuccess {
+//            print("device token saved \(status)")
+//        } else {
+//            print("device token failed to save \(status)")
+//        }
+//        
+//    }
+//    
+//    func deleteDeviceToken() {
+//        
+//        let service = "device.token"
+//
+//        var query = self.defaultKeychainQuery
+//        query[String(kSecClass)] = kSecClassGenericPassword
+//        query[String(kSecAttrAccount)] = tagDeviceId
+//        query[String(kSecAttrService)] = service as CFString
+//
+////        query[String(kSecAttrApplicationTag)] = tagDeviceId
+//        query[String(kSecMatchLimit)] = kSecMatchLimitOne
+//        
+//        // Delete any existing items
+//        let status: OSStatus = SecItemDelete(query as CFDictionary)
+//        
+//        if status == errSecSuccess {
+//            print("device token deleted")
+//        } else {
+//            print("device token failed to delete \(status)")
+//        }
+//        
+//    }
     
     // MARK: Functions
     
