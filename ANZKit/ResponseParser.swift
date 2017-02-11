@@ -158,4 +158,45 @@ public struct ResponseParser {
         return (deviceKey: deviceKey, deviceToken: deviceToken)
     }
     
+    static internal func parseQuickBalanceTokenResponse(responseData: Any?, rsaUtils: ANZRSAUtils) throws -> String {
+        
+        guard let responseData = responseData else {
+            throw ResponseParserError.UnknownResponseFormat
+        }
+        
+        guard let json = responseData as? [String: Any] else {
+            throw ResponseParserError.UnknownResponseFormat
+        }
+        
+        guard let encryptedQuickBalanceToken = json["quickBalanceToken"] as? String else {
+            throw ResponseParserError.UnknownResponseFormat
+        }
+        
+        guard let quickBalanceToken = rsaUtils.decryptBase64String(encryptedBase64String: encryptedQuickBalanceToken) else {
+            throw ResponseParserError.FailedToDecrypt
+        }
+        
+        return quickBalanceToken
+    }
+    
+    static internal func parseQuickBalancesResponse(responseData: Any?) throws -> [Balance] {
+        
+        guard let responseData = responseData else {
+            throw ResponseParserError.UnknownResponseFormat
+        }
+        
+        guard let json = responseData as? [String: Any] else {
+            throw ResponseParserError.UnknownResponseFormat
+        }
+        
+        guard let balancesArray = json["balances"] as? [[String: Any]] else {
+            throw ResponseParserError.UnknownResponseFormat
+        }
+        
+        let balances = balancesArray.flatMap({ Balance(jsonDictionary: $0) })
+        
+        return balances
+
+    }
+    
 }

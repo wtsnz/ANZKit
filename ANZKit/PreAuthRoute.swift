@@ -73,6 +73,12 @@ internal enum Route: RouteType {
     /// Fetch the list of devices
     case devices
     
+    /// Gets a quick balance token
+    case quickBalanceToken(devicePublicKey: String)
+    
+    /// Get the quick balances
+    case quickBalances(accountHashes: [String], showInvestmentSchemes: Bool)
+    
     /// Registers a new device and sets the pin for the current DeviceId
     /// Must also send a valid publicKey so we can decrypt anything the server sends us.
     case setPin(pin: String, publicKeyId: Int, deviceName: String, devicePublicKey: String)
@@ -125,6 +131,23 @@ internal enum Route: RouteType {
             ]
             
             return (.post, .standard, "/pins/verify", parameters)
+        
+        case .quickBalanceToken(let devicePublicKey):
+            
+            let parameters: [String: Any] = [
+                "publicKey": devicePublicKey
+            ]
+        
+            return (.post, .standard, "/qb/tokens", parameters)
+            
+        case .quickBalances(let accountHashes, let showInvestmentSchemes):
+            
+            let parameters: [String: Any] = [
+//                "showInvestmentSchemes": showInvestmentSchemes,
+                "accountHashes": accountHashes
+            ]
+            
+            return (.post, .standard, "/qb/balances", parameters)
         }
     }
 }

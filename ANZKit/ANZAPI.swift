@@ -182,6 +182,23 @@ public class ANZService: ServiceType {
                 return Observable.just(token)
             })
     }
+    
+    fileprivate func preAuthenticate(quickBalanceToken: String, publicKey: PublicKey) -> Observable<String> {
+        
+        guard let encryptedQuickBalanceToken = self.encryptString(string: quickBalanceToken, withPublicKey: publicKey) else {
+            return Observable.error(ResponseParserError.UnknownResponseFormat)
+        }
+        
+        let route = PreAuthRoute.authenticate(method: .quickBalanceToken(quickBalanceToken: encryptedQuickBalanceToken, publicKeyId: publicKey.id))
+        
+        return self.jsonRequest(route: route)
+            .flatMap({ (jsonData) -> Observable<String> in
+                guard let token = try? ResponseParser.parseAuthenticateTokenResponse(responseData: jsonData) else {
+                    return Observable.error(ServiceError.couldNotParseJSON)
+                }
+                return Observable.just(token)
+            })
+    }
 }
 
 extension ANZService {
@@ -228,6 +245,26 @@ extension ANZService {
             .flatMap({ (accessToken) in
                 return self.getSession()
             })
+    }
+    
+    public func quickBalances(with quickBalanceToken: String, for accountHashes: [String]) -> Observable<[Balance]> {
+        return self.currentPublicKey()
+            .flatMap { (publicKey) in
+                return self.preAuthenticate(quickBalanceToken: quickBalanceToken, publicKey: publicKey)
+            }
+            .do(onNext: { (accessToken) in
+                self.accessToken = accessToken
+            })
+            .flatMap({ (_) -> Observable<Any> in
+                let route = Route.quickBalances(accountHashes: accountHashes, showInvestmentSchemes: true)
+                return self.jsonRequest(route: route)
+            })
+            .flatMap { (jsonData) -> Observable<[Balance]> in
+                guard let balances = try? ResponseParser.parseQuickBalancesResponse(responseData: jsonData) else {
+                    return Observable.error(ServiceError.couldNotParseJSON)
+                }
+                return Observable.just(balances)
+            }
     }
     
     public func getSession() -> Observable<Session> {
@@ -349,6 +386,26 @@ extension ANZService {
                 self?.rsaUtils.deviceToken = nil
             })
     }
+    
+    // MARK: Quick Balance Token
+    
+    public func quickBalanceToken() -> Observable<String> {
+        
+        guard let devicePublicKey = self.rsaUtils.getPublicKeyDER()?.base64EncodedString() else {
+            return Observable.error(ResponseParserError.UnknownResponseFormat)
+        }
+        
+        let route = Route.quickBalanceToken(devicePublicKey: devicePublicKey)
+
+        return self.jsonRequest(route: route)
+            .flatMap { (jsonData) -> Observable<String> in
+                guard let quickBalanceToken = try? ResponseParser.parseQuickBalanceTokenResponse(responseData: jsonData, rsaUtils: self.rsaUtils) else {
+                    return Observable.error(ServiceError.couldNotParseJSON)
+                }
+                return Observable.just(quickBalanceToken)
+            }
+    }
+    
 }
 
 extension ANZService {

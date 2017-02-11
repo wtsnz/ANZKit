@@ -34,6 +34,8 @@
 		BE884C251E222788009D253F /* ANZKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE884C1E1E222788009D253F /* ANZKit.framework */; };
 		BE884C261E222788009D253F /* ANZKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BE884C1E1E222788009D253F /* ANZKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BE9594911E3A7C52002596A8 /* ResponseParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9594901E3A7C52002596A8 /* ResponseParser.swift */; };
+		BE9917A01E4EB56600C0685A /* Balance.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE99179F1E4EB56600C0685A /* Balance.swift */; };
+		BE9917A21E4EC0B600C0685A /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9917A11E4EC0B600C0685A /* LoginViewController.swift */; };
 		BECA0B9E1E3D401900946B50 /* ANZKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECA0B9D1E3D401900946B50 /* ANZKitTests.swift */; };
 		BECA0BA01E3D401900946B50 /* ANZKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE884C1E1E222788009D253F /* ANZKit.framework */; };
 		BECA0BA71E3D408A00946B50 /* SwiftyRSA.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE059F551E2375F800789981 /* SwiftyRSA.framework */; };
@@ -157,6 +159,8 @@
 		BE884C201E222788009D253F /* ANZKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ANZKit.h; sourceTree = "<group>"; };
 		BE884C211E222788009D253F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BE9594901E3A7C52002596A8 /* ResponseParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseParser.swift; sourceTree = "<group>"; };
+		BE99179F1E4EB56600C0685A /* Balance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Balance.swift; sourceTree = "<group>"; };
+		BE9917A11E4EC0B600C0685A /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		BECA0B9B1E3D401900946B50 /* ANZKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ANZKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BECA0B9D1E3D401900946B50 /* ANZKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ANZKitTests.swift; sourceTree = "<group>"; };
 		BECA0B9F1E3D401900946B50 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -269,6 +273,7 @@
 			children = (
 				BE17C86A1E4878BF00F83D55 /* ANZ.entitlements */,
 				BE884C071E22275B009D253F /* AppDelegate.swift */,
+				BE9917A11E4EC0B600C0685A /* LoginViewController.swift */,
 				BE884C091E22275B009D253F /* ViewController.swift */,
 				BE884C0B1E22275B009D253F /* Main.storyboard */,
 				BE884C0E1E22275B009D253F /* Assets.xcassets */,
@@ -381,6 +386,7 @@
 				BECA0BBF1E3DE87200946B50 /* ANZError.swift */,
 				BE054FF11E41D52A00DB4B65 /* Account.swift */,
 				BE054FF31E41D6B700DB4B65 /* Device.swift */,
+				BE99179F1E4EB56600C0685A /* Balance.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -698,6 +704,7 @@
 				BE2F10681E4B00FF00398D72 /* RootViewCoordinator.swift in Sources */,
 				BE2F10661E4B00D000398D72 /* Services.swift in Sources */,
 				BE884C0A1E22275B009D253F /* ViewController.swift in Sources */,
+				BE9917A21E4EC0B600C0685A /* LoginViewController.swift in Sources */,
 				BE2F10641E4B00B000398D72 /* AppCoordinator.swift in Sources */,
 				BECA0BB81E3DCDAD00946B50 /* Secrets.swift in Sources */,
 				BE884C081E22275B009D253F /* AppDelegate.swift in Sources */,
@@ -719,6 +726,7 @@
 				BE2F106F1E4B20D200398D72 /* KeychainOptions.swift in Sources */,
 				BEEC0FA61E2386E500314EC6 /* ANZAPI.swift in Sources */,
 				BE2F106D1E4B207F00398D72 /* KeychainWrapper.swift in Sources */,
+				BE9917A01E4EB56600C0685A /* Balance.swift in Sources */,
 				BE17C86C1E48808500F83D55 /* CryptoExportImportManager.swift in Sources */,
 				BECA0BC41E3DEF0700946B50 /* ServerConfig.swift in Sources */,
 				BECA0BC61E3DEF4800946B50 /* RouteType.swift in Sources */,

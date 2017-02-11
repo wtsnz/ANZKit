@@ -28,7 +28,7 @@ class AppCoordinator: RootViewCoordinator {
     
     private lazy var navigationController: UINavigationController = {
         let navigationController = UINavigationController()
-        navigationController.isNavigationBarHidden = true
+        navigationController.isNavigationBarHidden = false
         return navigationController
     }()
     
@@ -47,6 +47,11 @@ class AppCoordinator: RootViewCoordinator {
     
     /// Starts the coordinator
     public func start() {
+        
+        self.showLoginViewController()
+        
+        return;
+        
         self.showAuthenticationViewController()
     }
     
@@ -58,6 +63,13 @@ class AppCoordinator: RootViewCoordinator {
         viewController.context = self.context
         self.navigationController.viewControllers = [viewController]
 
+    }
+    
+    private func showLoginViewController() {
+        
+        let viewController = LoginViewController(context: self.context)
+        self.navigationController.viewControllers = [viewController]
+        
     }
     
 }

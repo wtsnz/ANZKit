@@ -19,6 +19,25 @@ class ViewController: UIViewController {
     
     let disposeBag = DisposeBag()
     
+    var accountHashes = [String]()
+    
+    
+    @IBAction func touchedGetQuickBalances(_ sender: Any) {
+        
+        let quickBalanceToken = self.quickBalanceToken.text ?? ""
+        
+        self.context.apiService.quickBalances(with: quickBalanceToken, for: accountHashes)
+            .subscribe(onNext: { (balances) in
+                dump(balances)
+            }, onError: { (error) in
+                print(error)
+            })
+            .addDisposableTo(self.disposeBag)
+        
+    }
+    
+    @IBOutlet weak var quickBalanceToken: UILabel!
+    
     @IBOutlet weak var passcodeTextField: UITextField!
     @IBOutlet weak var smsCodeTextField: UITextField!
     
@@ -71,7 +90,7 @@ class ViewController: UIViewController {
         
         // Save the sessionID too?
     
-        self.context.apiService.ibSessionId = "e81c898a-2e47-48c8-b012-93ba3c1b9172"
+//        self.context.apiService.ibSessionId = "e81c898a-2e47-48c8-b012-93ba3c1b9172"
         
         if let deviceToken = self.context.apiService.deviceToken {
             
@@ -86,8 +105,25 @@ class ViewController: UIViewController {
                 })
                 .subscribe(onNext: { (devices, accounts) in
                     
+                    self.accountHashes = accounts.map({ (account) -> String in
+                        return account.hashedAccountNumber
+                    })
+                    
                     dump(devices)
+                    
                     dump(accounts)
+                    
+                    self.context.apiService.quickBalanceToken()
+                        .observeOn(MainScheduler.instance)
+                        .subscribe(onNext: { (quickBalanceToken) in
+                            
+                            self.quickBalanceToken.text = quickBalanceToken
+                            
+                        }, onError: { (error) in
+                            print(error)
+                        })
+                        .addDisposableTo(self.disposeBag)
+                    
                     
                 }, onError: { (error) in
                     print(error)
