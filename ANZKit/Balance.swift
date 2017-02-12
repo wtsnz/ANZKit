@@ -37,4 +37,14 @@ public struct Balance: ParsableObject {
             return nil
         }
     }
+    
+    public func toWatchDictionary() -> [String: Any] {
+        
+        return [
+            "accountNumber": self.hashedAccountNumber,
+            "nickname": self.nickname,
+            "balance": self.balance
+        ]
+        
+    }
 }

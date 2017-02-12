@@ -36,20 +36,30 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     
     func requestedUpdateDidBegin() {
         
-        let complicationServer = CLKComplicationServer.sharedInstance()
+        print("Requested update")
         
-        guard let activeComplications = complicationServer.activeComplications else {
-            return
-        }
+        let delegate = WKExtension.shared().delegate as! ExtensionDelegate
         
-        for complication in activeComplications {
-            complicationServer.reloadTimeline(for: complication)
+        print("Fetching balances")
+        delegate.requestBalances { (_) in
+            
+            print("Reloading complications")
+            
+            let complicationServer = CLKComplicationServer.sharedInstance()
+            
+            guard let activeComplications = complicationServer.activeComplications else {
+                return
+            }
+            
+            for complication in activeComplications {
+                complicationServer.reloadTimeline(for: complication)
+            }
         }
         
     }
     
     func getNextRequestedUpdateDate(handler: @escaping (Date?) -> Void) {
-        handler(Date(timeIntervalSinceNow: 60 * 10))
+        handler(Date(timeIntervalSinceNow: 60 * 2))
     }
     
     // MARK: - Timeline Population
@@ -91,7 +101,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         case .utilitarianLarge:
             
             let template = CLKComplicationTemplateUtilitarianLargeFlat()
-            template.textProvider = CLKSimpleTextProvider(text: "LOADING")
+            template.textProvider = CLKSimpleTextProvider(text: "Loading...")
             handler(template)
             
         default:

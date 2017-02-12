@@ -11,20 +11,47 @@ import WatchConnectivity
 
 class ExtensionDelegate: NSObject, WKExtensionDelegate {
     
-    var balance: String {
+    var balances: [[String: Any]] {
         set {
-            UserDefaults.standard.set(newValue, forKey: "balance")
+            UserDefaults.standard.set(newValue, forKey: "balances")
             UserDefaults.standard.synchronize()
         }
         get {
-            
-            if let balance = UserDefaults.standard.string(forKey: "balance") {
-                return balance
+            if let balances = UserDefaults.standard.array(forKey: "balances") as? [[String: Any]] {
+                return balances
             } else {
-                return "UNKNOWN"
+                return []
             }
         }
     }
+    
+    var balance: String {
+        
+        guard let account = self.balances.first else {
+            return "Not found"
+        }
+        
+        guard let balance = account["balance"] as? String else {
+            return "Not found"
+        }
+        
+        return "$\(balance)"
+    }
+    
+//    var balance: String {
+//        set {
+//            UserDefaults.standard.set(newValue, forKey: "balance")
+//            UserDefaults.standard.synchronize()
+//        }
+//        get {
+//            
+//            if let balance = UserDefaults.standard.string(forKey: "balance") {
+//                return balance
+//            } else {
+//                return "UNKNOWN"
+//            }
+//        }
+//    }
     
     var session: WCSession? {
         didSet {
@@ -41,41 +68,8 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate {
         if WCSession.isSupported() {
             self.session = WCSession.default()
             
-            self.updateData { }
-            
         } else {
             print("Failed to create session")
-        }
-        
-    }
-    
-    func updateData(completion: @escaping () -> Void) {
-        
-        if self.session?.activationState == .activated {
-            self.session?.sendMessage(["command": "qb"], replyHandler: { (data) in
-                
-                print("received response")
-                print(data)
-                
-                guard let response = data["response"] as? String, response == "qb" else {
-                    completion()
-                    return
-                }
-                
-                guard let balance = data["balance"] as? String else {
-                    completion()
-                    return
-                }
-                
-                self.balance = balance
-                completion()
-                
-            }, errorHandler: { (error) in
-                print(error)
-                completion()
-            })
-        } else {
-            print("not activated")
         }
         
     }
@@ -112,7 +106,49 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate {
             }
         }
     }
-
+    
+    func requestBalances(completion: @escaping (_ balances: [[String: Any]]?) -> Void) {
+        
+        if self.session?.activationState == .activated {
+            self.session?.sendMessage(["command": "qb"], replyHandler: { (data) in
+                
+                print("received response")
+                print(data)
+                
+                guard let response = data["response"] as? String, response == "qb" else {
+                    completion(nil)
+                    return
+                }
+                
+                guard let balances = data["balances"] as? [[String: Any]] else {
+                    completion(nil)
+                    return
+                }
+                
+                self.balances = balances
+                
+                completion(balances)
+                
+                let complicationServer = CLKComplicationServer.sharedInstance()
+                
+                guard let activeComplications = complicationServer.activeComplications else {
+                    return
+                }
+                
+                for complication in activeComplications {
+                    complicationServer.reloadTimeline(for: complication)
+                }
+                
+            }, errorHandler: { (error) in
+                print(error)
+                completion(nil)
+            })
+        } else {
+            completion(nil)
+            print("not activated")
+        }
+        
+    }
 }
 
 
@@ -122,7 +158,14 @@ extension ExtensionDelegate: WCSessionDelegate {
         dump(activationState)
         dump(error)
         
-        self.updateData { }
+        self.requestBalances { (balances) in
+            
+            if let balances = balances {
+                self.balances = balances
+            } else {
+                print("failed")
+            }
+        }
         
     }
     
@@ -138,8 +181,8 @@ extension ExtensionDelegate: WCSessionDelegate {
         
         dump(userInfo)
         
-        if let balance = userInfo["balance"] as? String {
-            self.balance = balance
+        if let balances = userInfo["balances"] as? [[String: Any]] {
+            self.balances = balances
         }
         
     }

@@ -36,7 +36,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             session = WCSession.default()
         }
         
-        application.setMinimumBackgroundFetchInterval(60 * 5)
+        application.setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalMinimum)
         
         let localDataService = LocalDataService()
         let anzService = self.anzService(using: localDataService)
@@ -171,16 +171,16 @@ extension AppDelegate: WCSessionDelegate {
             let keychain = KeychainWrapper(serviceName: "anzkit.quickbalance")
             
             guard let quickBalanceToken = keychain.string(forKey: "qb.token") else {
-                replyHandler(["response": "qb", "balance": "error"])
+                replyHandler(["response": "qb", "status": "error"])
                 return
             }
             guard let account = keychain.string(forKey: "qb.account") else {
-                replyHandler(["response": "qb", "balance": "error"])
+                replyHandler(["response": "qb", "status": "error"])
                 return
             }
             
             guard let service = self.appContext?.apiService.quickBalanceService() else {
-                replyHandler(["response": "qb", "balance": "error"])
+                replyHandler(["response": "qb", "status": "error"])
                 return
             }
             
@@ -188,12 +188,14 @@ extension AppDelegate: WCSessionDelegate {
                 .subscribe(onNext: { (balances) in
                     dump(balances)
                     
-                    replyHandler(["response": "qb", "balance": balances.first!.balance])
+                    let watchDictionary = balances.map { $0.toWatchDictionary() }
+                    
+                    replyHandler(["response": "qb", "balances": watchDictionary])
                     
                 }, onError: { (error) in
                     dump(error)
                     
-                    replyHandler(["response": "qb", "balance": "error"])
+                    replyHandler(["response": "qb", "status": "error"])
                     
                 })
             

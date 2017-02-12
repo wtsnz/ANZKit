@@ -12,7 +12,6 @@ import RxSwift
 import RxCocoa
 import ANZKit
 
-
 protocol AccountsViewControllerDelegate {
     func accountViewController(viewController: AccountsViewController, selectedAccount: Account)
 }
