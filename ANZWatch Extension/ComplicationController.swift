@@ -7,9 +7,14 @@
 //
 
 import ClockKit
-
+import WatchKit
 
 class ComplicationController: NSObject, CLKComplicationDataSource {
+    
+    var balance: String {
+        let delegate = WKExtension.shared().delegate as! ExtensionDelegate
+        return delegate.balance
+    }
     
     // MARK: - Timeline Configuration
     
@@ -38,14 +43,13 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         }
         
         for complication in activeComplications {
-            
             complicationServer.reloadTimeline(for: complication)
         }
         
     }
     
     func getNextRequestedUpdateDate(handler: @escaping (Date?) -> Void) {
-        handler(Date(timeIntervalSinceNow: 500))
+        handler(Date(timeIntervalSinceNow: 60 * 10))
     }
     
     // MARK: - Timeline Population
@@ -57,7 +61,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         case .utilitarianLarge:
             
             let template = CLKComplicationTemplateUtilitarianLargeFlat()
-            template.textProvider = CLKSimpleTextProvider(text: "$100.0", shortText: "$100.0")
+            template.textProvider = CLKSimpleTextProvider(text: self.balance)
             
             let timelineEntry = CLKComplicationTimelineEntry(date: Date(), complicationTemplate: template)
             
@@ -99,3 +103,5 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     }
     
 }
+
+

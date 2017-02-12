@@ -9,8 +9,6 @@
 /* Begin PBXBuildFile section */
 		BE054FF21E41D52A00DB4B65 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE054FF11E41D52A00DB4B65 /* Account.swift */; };
 		BE054FF41E41D6B700DB4B65 /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE054FF31E41D6B700DB4B65 /* Device.swift */; };
-		BE059F501E2375E900789981 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE059F4F1E2375E900789981 /* Alamofire.framework */; };
-		BE059F511E2375E900789981 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE059F4F1E2375E900789981 /* Alamofire.framework */; };
 		BE059F531E2375F100789981 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE059F521E2375F100789981 /* RxSwift.framework */; };
 		BE059F541E2375F100789981 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE059F521E2375F100789981 /* RxSwift.framework */; };
 		BE059F561E2375F800789981 /* SwiftyRSA.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE059F551E2375F800789981 /* SwiftyRSA.framework */; };
@@ -36,11 +34,14 @@
 		BE9594911E3A7C52002596A8 /* ResponseParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9594901E3A7C52002596A8 /* ResponseParser.swift */; };
 		BE9917A01E4EB56600C0685A /* Balance.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE99179F1E4EB56600C0685A /* Balance.swift */; };
 		BE9917A21E4EC0B600C0685A /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9917A11E4EC0B600C0685A /* LoginViewController.swift */; };
+		BE9917A41E4EFFBF00C0685A /* IGListKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE9917A31E4EFFBF00C0685A /* IGListKit.framework */; };
+		BE9917A61E4EFFC500C0685A /* SnapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE9917A51E4EFFC500C0685A /* SnapKit.framework */; };
+		BE9917A81E4F20FF00C0685A /* TwoWayBinding.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9917A71E4F20FF00C0685A /* TwoWayBinding.swift */; };
+		BE9917BD1E4FD59100C0685A /* AccountsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9917BC1E4FD59100C0685A /* AccountsViewController.swift */; };
 		BECA0B9E1E3D401900946B50 /* ANZKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECA0B9D1E3D401900946B50 /* ANZKitTests.swift */; };
 		BECA0BA01E3D401900946B50 /* ANZKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE884C1E1E222788009D253F /* ANZKit.framework */; };
 		BECA0BA71E3D408A00946B50 /* SwiftyRSA.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE059F551E2375F800789981 /* SwiftyRSA.framework */; };
 		BECA0BA81E3D408A00946B50 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE059F521E2375F100789981 /* RxSwift.framework */; };
-		BECA0BA91E3D408A00946B50 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE059F4F1E2375E900789981 /* Alamofire.framework */; };
 		BECA0BAC1E3D41C200946B50 /* current.json in Resources */ = {isa = PBXBuildFile; fileRef = BECA0BAB1E3D41C200946B50 /* current.json */; };
 		BECA0BB41E3D422000946B50 /* ResponseParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECA0BB31E3D422000946B50 /* ResponseParserTests.swift */; };
 		BECA0BB61E3D681500946B50 /* authenticate.json in Resources */ = {isa = PBXBuildFile; fileRef = BECA0BB51E3D681500946B50 /* authenticate.json */; };
@@ -135,7 +136,6 @@
 		BE054FF11E41D52A00DB4B65 /* Account.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
 		BE054FF31E41D6B700DB4B65 /* Device.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
 		BE054FF51E431AAF00DB4B65 /* RSAUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RSAUtils.swift; path = ../ANZ/RSAUtils.swift; sourceTree = "<group>"; };
-		BE059F4F1E2375E900789981 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
 		BE059F521E2375F100789981 /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = Carthage/Build/iOS/RxSwift.framework; sourceTree = "<group>"; };
 		BE059F551E2375F800789981 /* SwiftyRSA.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyRSA.framework; path = Carthage/Build/iOS/SwiftyRSA.framework; sourceTree = "<group>"; };
 		BE17C8681E4847D800F83D55 /* CryptoExportImportManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CryptoExportImportManager.swift; path = ../ANZ/CryptoExportImportManager.swift; sourceTree = "<group>"; };
@@ -161,6 +161,10 @@
 		BE9594901E3A7C52002596A8 /* ResponseParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseParser.swift; sourceTree = "<group>"; };
 		BE99179F1E4EB56600C0685A /* Balance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Balance.swift; sourceTree = "<group>"; };
 		BE9917A11E4EC0B600C0685A /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		BE9917A31E4EFFBF00C0685A /* IGListKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IGListKit.framework; path = Carthage/Build/iOS/IGListKit.framework; sourceTree = "<group>"; };
+		BE9917A51E4EFFC500C0685A /* SnapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SnapKit.framework; path = Carthage/Build/iOS/SnapKit.framework; sourceTree = "<group>"; };
+		BE9917A71E4F20FF00C0685A /* TwoWayBinding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwoWayBinding.swift; sourceTree = "<group>"; };
+		BE9917BC1E4FD59100C0685A /* AccountsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountsViewController.swift; sourceTree = "<group>"; };
 		BECA0B9B1E3D401900946B50 /* ANZKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ANZKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BECA0B9D1E3D401900946B50 /* ANZKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ANZKitTests.swift; sourceTree = "<group>"; };
 		BECA0B9F1E3D401900946B50 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -195,9 +199,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BE9917A61E4EFFC500C0685A /* SnapKit.framework in Frameworks */,
+				BE9917A41E4EFFBF00C0685A /* IGListKit.framework in Frameworks */,
 				BECA0BBE1E3DE40600946B50 /* RxCocoa.framework in Frameworks */,
 				BE884C251E222788009D253F /* ANZKit.framework in Frameworks */,
-				BE059F501E2375E900789981 /* Alamofire.framework in Frameworks */,
 				BE059F531E2375F100789981 /* RxSwift.framework in Frameworks */,
 				BE059F561E2375F800789981 /* SwiftyRSA.framework in Frameworks */,
 			);
@@ -208,7 +213,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				BE059F541E2375F100789981 /* RxSwift.framework in Frameworks */,
-				BE059F511E2375E900789981 /* Alamofire.framework in Frameworks */,
 				BE059F571E2375F800789981 /* SwiftyRSA.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -220,7 +224,6 @@
 				BECA0BA01E3D401900946B50 /* ANZKit.framework in Frameworks */,
 				BECA0BA71E3D408A00946B50 /* SwiftyRSA.framework in Frameworks */,
 				BECA0BA81E3D408A00946B50 /* RxSwift.framework in Frameworks */,
-				BECA0BA91E3D408A00946B50 /* Alamofire.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -237,6 +240,8 @@
 		BE059F4E1E2375C800789981 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BE9917A51E4EFFC500C0685A /* SnapKit.framework */,
+				BE9917A31E4EFFBF00C0685A /* IGListKit.framework */,
 				BEF8CC1A1E49BC550031EF9A /* Security.framework */,
 				BEF8CC101E49BC290031EF9A /* iOS */,
 			);
@@ -284,6 +289,8 @@
 				BE2F10631E4B00B000398D72 /* AppCoordinator.swift */,
 				BE2F10651E4B00D000398D72 /* Services.swift */,
 				BE2F10671E4B00FF00398D72 /* RootViewCoordinator.swift */,
+				BE9917A71E4F20FF00C0685A /* TwoWayBinding.swift */,
+				BE9917BC1E4FD59100C0685A /* AccountsViewController.swift */,
 			);
 			path = ANZ;
 			sourceTree = "<group>";
@@ -397,7 +404,6 @@
 				BECA0BBD1E3DE40600946B50 /* RxCocoa.framework */,
 				BE059F551E2375F800789981 /* SwiftyRSA.framework */,
 				BE059F521E2375F100789981 /* RxSwift.framework */,
-				BE059F4F1E2375E900789981 /* Alamofire.framework */,
 			);
 			name = iOS;
 			sourceTree = "<group>";
@@ -544,9 +550,12 @@
 				TargetAttributes = {
 					BE884C031E22275B009D253F = {
 						CreatedOnToolsVersion = 8.2;
-						DevelopmentTeam = U4MT6NDQZ9;
+						DevelopmentTeam = DQA7HX6GV3;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
 							com.apple.Keychain = {
 								enabled = 1;
 							};
@@ -565,13 +574,23 @@
 					};
 					BEF8CC1D1E49BDBE0031EF9A = {
 						CreatedOnToolsVersion = 8.2;
-						DevelopmentTeam = U4MT6NDQZ9;
+						DevelopmentTeam = DQA7HX6GV3;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.BackgroundModes.watchos.app = {
+								enabled = 0;
+							};
+						};
 					};
 					BEF8CC291E49BDBF0031EF9A = {
 						CreatedOnToolsVersion = 8.2;
 						DevelopmentTeam = DQA7HX6GV3;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.BackgroundModes.watchos.extension = {
+								enabled = 0;
+							};
+						};
 					};
 				};
 			};
@@ -652,8 +671,9 @@
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/SwiftyRSA.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/RxSwift.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/Alamofire.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/RxCocoa.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/IGListKit.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/SnapKit.framework",
 			);
 			name = Carthage;
 			outputPaths = (
@@ -683,7 +703,6 @@
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/SwiftyRSA.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/RxSwift.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/Alamofire.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/RxCocoa.framework",
 			);
 			name = Carthage;
@@ -706,6 +725,8 @@
 				BE884C0A1E22275B009D253F /* ViewController.swift in Sources */,
 				BE9917A21E4EC0B600C0685A /* LoginViewController.swift in Sources */,
 				BE2F10641E4B00B000398D72 /* AppCoordinator.swift in Sources */,
+				BE9917BD1E4FD59100C0685A /* AccountsViewController.swift in Sources */,
+				BE9917A81E4F20FF00C0685A /* TwoWayBinding.swift in Sources */,
 				BECA0BB81E3DCDAD00946B50 /* Secrets.swift in Sources */,
 				BE884C081E22275B009D253F /* AppDelegate.swift in Sources */,
 			);
@@ -905,7 +926,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = ANZ/ANZ.entitlements;
-				DEVELOPMENT_TEAM = U4MT6NDQZ9;
+				DEVELOPMENT_TEAM = DQA7HX6GV3;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
@@ -924,7 +945,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = ANZ/ANZ.entitlements;
-				DEVELOPMENT_TEAM = U4MT6NDQZ9;
+				DEVELOPMENT_TEAM = DQA7HX6GV3;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
@@ -1043,7 +1064,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 3.1;
+				WATCHOS_DEPLOYMENT_TARGET = 3.0;
 			};
 			name = Debug;
 		};
@@ -1060,7 +1081,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 3.1;
+				WATCHOS_DEPLOYMENT_TARGET = 3.0;
 			};
 			name = Release;
 		};
@@ -1069,7 +1090,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = U4MT6NDQZ9;
+				DEVELOPMENT_TEAM = DQA7HX6GV3;
 				IBSC_MODULE = ANZWatch_Extension;
 				INFOPLIST_FILE = ANZWatch/Info.plist;
 				PRODUCT_BUNDLE_IDENTIFIER = io.townsend.ANZ.watchkitapp;
@@ -1078,7 +1099,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 3.1;
+				WATCHOS_DEPLOYMENT_TARGET = 3.0;
 			};
 			name = Debug;
 		};
@@ -1087,7 +1108,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = U4MT6NDQZ9;
+				DEVELOPMENT_TEAM = DQA7HX6GV3;
 				IBSC_MODULE = ANZWatch_Extension;
 				INFOPLIST_FILE = ANZWatch/Info.plist;
 				PRODUCT_BUNDLE_IDENTIFIER = io.townsend.ANZ.watchkitapp;
@@ -1096,7 +1117,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 3.1;
+				WATCHOS_DEPLOYMENT_TARGET = 3.0;
 			};
 			name = Release;
 		};

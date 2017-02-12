@@ -14,7 +14,7 @@ import SwiftyRSA
 
 public class ANZService: ServiceType {
     
-    enum ServiceError: Error {
+    public enum ServiceError: Error {
         case couldNotParseJSON
         case apiError(error: ANZError)
     }
@@ -65,7 +65,6 @@ public class ANZService: ServiceType {
     }
     
     
-    
     // TODO: Add to protocol and stub
     let rsaUtils = ANZRSAUtils(keychainAccessGroup: nil)
 
@@ -90,6 +89,20 @@ public class ANZService: ServiceType {
         
         // Create certificates
         
+    }
+    
+    public func quickBalanceService() -> ANZService {
+        return ANZService(
+            serverConfig: self.serverConfig,
+            requestId: self.requestId,
+            apiKey: self.apiKey,
+            userAgent: self.userAgent,
+            deviceId: self.deviceId,
+            deviceDescription: self.deviceDescription,
+            deviceApiVersion: self.deviceApiVersion,
+            accessToken: nil,//self.accessToken,
+            ibSessionId: nil//self.ibSessionId
+        )
     }
     
     fileprivate func jsonRequest(route: RouteType) -> Observable<Any> {

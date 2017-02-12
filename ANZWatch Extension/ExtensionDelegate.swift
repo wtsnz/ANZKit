@@ -7,11 +7,77 @@
 //
 
 import WatchKit
+import WatchConnectivity
 
 class ExtensionDelegate: NSObject, WKExtensionDelegate {
-
+    
+    var balance: String {
+        set {
+            UserDefaults.standard.set(newValue, forKey: "balance")
+            UserDefaults.standard.synchronize()
+        }
+        get {
+            
+            if let balance = UserDefaults.standard.string(forKey: "balance") {
+                return balance
+            } else {
+                return "UNKNOWN"
+            }
+        }
+    }
+    
+    var session: WCSession? {
+        didSet {
+            if let session = session {
+                session.delegate = self
+                session.activate()
+            }
+        }
+    }
+    
     func applicationDidFinishLaunching() {
         // Perform any final initialization of your application.
+        
+        if WCSession.isSupported() {
+            self.session = WCSession.default()
+            
+            self.updateData { }
+            
+        } else {
+            print("Failed to create session")
+        }
+        
+    }
+    
+    func updateData(completion: @escaping () -> Void) {
+        
+        if self.session?.activationState == .activated {
+            self.session?.sendMessage(["command": "qb"], replyHandler: { (data) in
+                
+                print("received response")
+                print(data)
+                
+                guard let response = data["response"] as? String, response == "qb" else {
+                    completion()
+                    return
+                }
+                
+                guard let balance = data["balance"] as? String else {
+                    completion()
+                    return
+                }
+                
+                self.balance = balance
+                completion()
+                
+            }, errorHandler: { (error) in
+                print(error)
+                completion()
+            })
+        } else {
+            print("not activated")
+        }
+        
     }
 
     func applicationDidBecomeActive() {
@@ -48,3 +114,35 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate {
     }
 
 }
+
+
+extension ExtensionDelegate: WCSessionDelegate {
+    
+    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
+        dump(activationState)
+        dump(error)
+        
+        self.updateData { }
+        
+    }
+    
+    func sessionReachabilityDidChange(_ session: WCSession) {
+        dump(session.isReachable)
+    }
+    
+    func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
+        dump(message)
+    }
+    
+    func session(_ session: WCSession, didReceiveUserInfo userInfo: [String : Any] = [:]) {
+        
+        dump(userInfo)
+        
+        if let balance = userInfo["balance"] as? String {
+            self.balance = balance
+        }
+        
+    }
+    
+}
+

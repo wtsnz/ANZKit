@@ -9,13 +9,18 @@
 import UIKit
 import WatchConnectivity
 import ANZKit
+import RxSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
+    let disposeBag = DisposeBag()
+    
     var window: UIWindow?
     var appCoordinator: AppCoordinator!
 
+    var appContext: AppContext? = nil
+    
     var session: WCSession? {
         didSet {
             if let session = session {
@@ -31,10 +36,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             session = WCSession.default()
         }
         
+        application.setMinimumBackgroundFetchInterval(60 * 5)
+        
         let localDataService = LocalDataService()
         let anzService = self.anzService(using: localDataService)
         
         let appContext = AppContext(apiService: anzService, localDataService: localDataService)
+        self.appContext = appContext
         
         self.window = UIWindow(frame: UIScreen.main.bounds)
         self.appCoordinator = AppCoordinator(window: self.window!, context: appContext)
@@ -42,7 +50,49 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         return true
     }
-
+    
+    func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        
+        let keychain = KeychainWrapper(serviceName: "anzkit.quickbalance")
+        
+        guard let quickBalanceToken = keychain.string(forKey: "qb.token") else {
+//            replyHandler(["response": "qb", "balance": "error"])
+            return
+        }
+        guard let account = keychain.string(forKey: "qb.account") else {
+//            replyHandler(["response": "qb", "balance": "error"])
+            return
+        }
+        
+        guard let service = self.appContext?.apiService.quickBalanceService() else {
+//            replyHandler(["response": "qb", "balance": "error"])
+            return
+        }
+        
+        service.quickBalances(with: quickBalanceToken, for: [account])
+            .subscribe(onNext: { (balances) in
+                dump(balances)
+                
+                guard let watchSession = self.session else {
+                    // Lie
+                    completionHandler(UIBackgroundFetchResult.newData)
+                    return
+                }
+                
+                watchSession.transferCurrentComplicationUserInfo(["balance": balances.first!.balance])
+                
+                completionHandler(UIBackgroundFetchResult.newData)
+                
+            }, onError: { (error) in
+                dump(error)
+                
+//                replyHandler(["response": "qb", "balance": "error"])
+                completionHandler(UIBackgroundFetchResult.newData)
+            })
+            .addDisposableTo(self.disposeBag)
+        
+    }
+    
     func anzService(using dataService: LocalDataService) -> ANZService {
         
         let serverConfig = ServerConfig.production
@@ -110,6 +160,48 @@ extension AppDelegate: WCSessionDelegate {
     
     func session(_ session: WCSession, didReceiveMessage message: [String : Any], replyHandler: @escaping ([String : Any]) -> Void) {
         print(message)
+        
+        guard let command = message["command"] as? String else {
+            return
+        }
+        
+        switch command {
+        case "qb":
+            
+            let keychain = KeychainWrapper(serviceName: "anzkit.quickbalance")
+            
+            guard let quickBalanceToken = keychain.string(forKey: "qb.token") else {
+                replyHandler(["response": "qb", "balance": "error"])
+                return
+            }
+            guard let account = keychain.string(forKey: "qb.account") else {
+                replyHandler(["response": "qb", "balance": "error"])
+                return
+            }
+            
+            guard let service = self.appContext?.apiService.quickBalanceService() else {
+                replyHandler(["response": "qb", "balance": "error"])
+                return
+            }
+            
+            service.quickBalances(with: quickBalanceToken, for: [account])
+                .subscribe(onNext: { (balances) in
+                    dump(balances)
+                    
+                    replyHandler(["response": "qb", "balance": balances.first!.balance])
+                    
+                }, onError: { (error) in
+                    dump(error)
+                    
+                    replyHandler(["response": "qb", "balance": "error"])
+                    
+                })
+            
+        default:
+            break
+        }
+        
     }
+    
     
 }

@@ -4,7 +4,6 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="watchOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="11508"/>
     </dependencies>
@@ -12,9 +11,16 @@
         <!--Interface Controller-->
         <scene sceneID="aou-V4-d1y">
             <objects>
-                <controller id="AgC-eL-Hgc" customClass="InterfaceController" customModule="ANZWatch" customModuleProvider="target"/>
+                <controller id="AgC-eL-Hgc" customClass="InterfaceController" customModule="ANZWatch" customModuleProvider="target">
+                    <items>
+                        <label width="132" height="43" alignment="left" text="Label" id="CEp-VU-bLZ"/>
+                    </items>
+                    <connections>
+                        <outlet property="balanceLabel" destination="CEp-VU-bLZ" id="fFb-tN-k0P"/>
+                    </connections>
+                </controller>
             </objects>
-            <point key="canvasLocation" x="-25" y="85"/>
+            <point key="canvasLocation" x="-25.282051282051285" y="85"/>
         </scene>
     </scenes>
 </document>
