@@ -11,6 +11,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 import ANZKit
+import UserNotifications
 
 protocol AccountsViewControllerDelegate {
     func accountViewController(viewController: AccountsViewController, selectedAccount: Account)
@@ -59,6 +60,21 @@ class AccountsViewController: UITableViewController {
     @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        let center = UNUserNotificationCenter.current()
+        let options: UNAuthorizationOptions = [.alert, .sound];
+
+        center.requestAuthorization(options: options) {
+            (granted, error) in
+            if !granted {
+                print("Something went wrong")
+            }
+        }
+        
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {

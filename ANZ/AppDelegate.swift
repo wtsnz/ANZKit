@@ -10,10 +10,13 @@ import UIKit
 import WatchConnectivity
 import ANZKit
 import RxSwift
+import UserNotifications
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
+    let notificationDelegate = NotificationDelegate()
+    
     let disposeBag = DisposeBag()
     
     var window: UIWindow?
@@ -31,6 +34,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        
+        // Register for remote notifications
+        UIApplication.shared.registerForRemoteNotifications()
+        
+        
+        
+        let center = UNUserNotificationCenter.current()
+        center.delegate = notificationDelegate
         
         if WCSession.isSupported() {
             session = WCSession.default()
@@ -53,6 +64,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         
+        let content = UNMutableNotificationContent()
+        content.title = "Background fetch!"
+        content.body = "Just attempted to update the data"
+        content.sound = UNNotificationSound.default()
+        
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1,
+                                                        repeats: false)
+        
+        let identifier = "UYLLocalNotification"
+        let request = UNNotificationRequest(identifier: identifier,
+                                            content: content, trigger: trigger)
+        let center = UNUserNotificationCenter.current()
+        center.add(request, withCompletionHandler: { (error) in
+            if let error = error {
+                // Something went wrong
+            }
+        })
+        
+
         let keychain = KeychainWrapper(serviceName: "anzkit.quickbalance")
         
         guard let quickBalanceToken = keychain.string(forKey: "qb.token") else {
@@ -118,6 +148,64 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         )
         
         return service
+    }
+    
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        print(error)
+    }
+    
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        print(deviceToken.description)
+        let token = deviceToken.map { String(format: "%02.2hhx", $0) }.joined()
+        print(token)
+    }
+    
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        
+        print("fetch")
+        
+        let keychain = KeychainWrapper(serviceName: "anzkit.quickbalance")
+        
+        guard let quickBalanceToken = keychain.string(forKey: "qb.token") else {
+            completionHandler(.newData)
+            return
+        }
+        guard let account = keychain.string(forKey: "qb.account") else {
+            completionHandler(.newData)
+            return
+        }
+        
+        guard let service = self.appContext?.apiService.quickBalanceService() else {
+            completionHandler(.newData)
+            return
+        }
+        
+        service.quickBalances(with: quickBalanceToken, for: [account])
+            .subscribe(onNext: { (balances) in
+                dump(balances)
+                
+                guard let watchSession = self.session else {
+                    // Lie
+                    completionHandler(UIBackgroundFetchResult.newData)
+                    return
+                }
+                
+                watchSession.transferCurrentComplicationUserInfo(["balance": balances.first!.balance])
+                
+//                let watchDictionary = balances.map { $0.toWatchDictionary() }
+                
+//                replyHandler(["response": "qb", "balances": watchDictionary])
+                
+                completionHandler(UIBackgroundFetchResult.newData)
+                
+            }, onError: { (error) in
+                dump(error)
+                // Lie
+                completionHandler(UIBackgroundFetchResult.newData)
+            })
+            .addDisposableTo(self.disposeBag)
+        
+        completionHandler(.newData)
     }
     
     func applicationWillResignActive(_ application: UIApplication) {

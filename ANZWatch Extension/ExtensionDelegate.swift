@@ -27,15 +27,27 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate {
     
     var balance: String {
         
-        guard let account = self.balances.first else {
-            return "Not found"
+        set {
+            UserDefaults.standard.set(newValue, forKey: "balance")
+            UserDefaults.standard.synchronize()
+        }
+        get {
+            if let balance = UserDefaults.standard.string(forKey: "balance") {
+                return balance
+            } else {
+                return "Not Saved"
+            }
         }
         
-        guard let balance = account["balance"] as? String else {
-            return "Not found"
-        }
-        
-        return "$\(balance)"
+//        guard let account = self.balances.first else {
+//            return "Not found"
+//        }
+//        
+//        guard let balance = account["balance"] as? String else {
+//            return "Not found"
+//        }
+//        
+//        return "$\(balance)"
     }
     
 //    var balance: String {
@@ -61,6 +73,7 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate {
             }
         }
     }
+
     
     func applicationDidFinishLaunching() {
         // Perform any final initialization of your application.
@@ -185,6 +198,20 @@ extension ExtensionDelegate: WCSessionDelegate {
             self.balances = balances
         }
         
+        if let balance = userInfo["balance"] as? String {
+            
+            self.balance = balance
+            
+            let complicationServer = CLKComplicationServer.sharedInstance()
+            
+            guard let activeComplications = complicationServer.activeComplications else {
+                return
+            }
+            
+            for complication in activeComplications {
+                complicationServer.reloadTimeline(for: complication)
+            }
+        }
     }
     
 }

@@ -23,6 +23,7 @@
 		BE2F106A1E4B0B0F00398D72 /* RSAUtilsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE2F10691E4B0B0F00398D72 /* RSAUtilsTests.swift */; };
 		BE2F106D1E4B207F00398D72 /* KeychainWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE2F106C1E4B207F00398D72 /* KeychainWrapper.swift */; };
 		BE2F106F1E4B20D200398D72 /* KeychainOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE2F106E1E4B20D200398D72 /* KeychainOptions.swift */; };
+		BE53FB731E52E4CB009E477C /* NotificationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE53FB721E52E4CB009E477C /* NotificationDelegate.swift */; };
 		BE884C081E22275B009D253F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE884C071E22275B009D253F /* AppDelegate.swift */; };
 		BE884C0A1E22275B009D253F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE884C091E22275B009D253F /* ViewController.swift */; };
 		BE884C0D1E22275B009D253F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BE884C0B1E22275B009D253F /* Main.storyboard */; };
@@ -148,6 +149,7 @@
 		BE2F10691E4B0B0F00398D72 /* RSAUtilsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSAUtilsTests.swift; sourceTree = "<group>"; };
 		BE2F106C1E4B207F00398D72 /* KeychainWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainWrapper.swift; sourceTree = "<group>"; };
 		BE2F106E1E4B20D200398D72 /* KeychainOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainOptions.swift; sourceTree = "<group>"; };
+		BE53FB721E52E4CB009E477C /* NotificationDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationDelegate.swift; sourceTree = "<group>"; };
 		BE884C041E22275B009D253F /* ANZ.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ANZ.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE884C071E22275B009D253F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BE884C091E22275B009D253F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -291,6 +293,7 @@
 				BE2F10671E4B00FF00398D72 /* RootViewCoordinator.swift */,
 				BE9917A71E4F20FF00C0685A /* TwoWayBinding.swift */,
 				BE9917BC1E4FD59100C0685A /* AccountsViewController.swift */,
+				BE53FB721E52E4CB009E477C /* NotificationDelegate.swift */,
 			);
 			path = ANZ;
 			sourceTree = "<group>";
@@ -559,6 +562,9 @@
 							com.apple.Keychain = {
 								enabled = 1;
 							};
+							com.apple.Push = {
+								enabled = 1;
+							};
 						};
 					};
 					BE884C1D1E222788009D253F = {
@@ -724,6 +730,7 @@
 				BE2F10661E4B00D000398D72 /* Services.swift in Sources */,
 				BE884C0A1E22275B009D253F /* ViewController.swift in Sources */,
 				BE9917A21E4EC0B600C0685A /* LoginViewController.swift in Sources */,
+				BE53FB731E52E4CB009E477C /* NotificationDelegate.swift in Sources */,
 				BE2F10641E4B00B000398D72 /* AppCoordinator.swift in Sources */,
 				BE9917BD1E4FD59100C0685A /* AccountsViewController.swift in Sources */,
 				BE9917A81E4F20FF00C0685A /* TwoWayBinding.swift in Sources */,
@@ -933,7 +940,7 @@
 				);
 				INFOPLIST_FILE = ANZ/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = io.townsend.ANZ;
+				PRODUCT_BUNDLE_IDENTIFIER = com.wtsnz.ANZGoMoney;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -952,7 +959,7 @@
 				);
 				INFOPLIST_FILE = ANZ/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = io.townsend.ANZ;
+				PRODUCT_BUNDLE_IDENTIFIER = com.wtsnz.ANZGoMoney;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -1058,7 +1065,7 @@
 				DEVELOPMENT_TEAM = DQA7HX6GV3;
 				INFOPLIST_FILE = "ANZWatch Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = io.townsend.ANZ.watchkitapp.watchkitextension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.wtsnz.ANZGoMoney.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -1075,7 +1082,7 @@
 				DEVELOPMENT_TEAM = DQA7HX6GV3;
 				INFOPLIST_FILE = "ANZWatch Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = io.townsend.ANZ.watchkitapp.watchkitextension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.wtsnz.ANZGoMoney.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -1093,7 +1100,7 @@
 				DEVELOPMENT_TEAM = DQA7HX6GV3;
 				IBSC_MODULE = ANZWatch_Extension;
 				INFOPLIST_FILE = ANZWatch/Info.plist;
-				PRODUCT_BUNDLE_IDENTIFIER = io.townsend.ANZ.watchkitapp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.wtsnz.ANZGoMoney.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -1111,7 +1118,7 @@
 				DEVELOPMENT_TEAM = DQA7HX6GV3;
 				IBSC_MODULE = ANZWatch_Extension;
 				INFOPLIST_FILE = ANZWatch/Info.plist;
-				PRODUCT_BUNDLE_IDENTIFIER = io.townsend.ANZ.watchkitapp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.wtsnz.ANZGoMoney.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
