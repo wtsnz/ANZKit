@@ -8,7 +8,6 @@
 
 import UIKit
 import ANZKit
-import Alamofire
 import SwiftyRSA
 import RxSwift
 

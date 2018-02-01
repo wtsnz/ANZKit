@@ -248,6 +248,38 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		BE270C852022E9C500BC97BE /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				BE9917A11E4EC0B600C0685A /* LoginViewController.swift */,
+				BE884C091E22275B009D253F /* ViewController.swift */,
+				BE9917BC1E4FD59100C0685A /* AccountsViewController.swift */,
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		BE270C862022E9D600BC97BE /* Coordinators */ = {
+			isa = PBXGroup;
+			children = (
+				BE2F10611E4B008E00398D72 /* Coordinator.swift */,
+				BE2F10631E4B00B000398D72 /* AppCoordinator.swift */,
+				BE2F10671E4B00FF00398D72 /* RootViewCoordinator.swift */,
+			);
+			path = Coordinators;
+			sourceTree = "<group>";
+		};
+		BE270C872022E9E900BC97BE /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				BE17C86A1E4878BF00F83D55 /* ANZ.entitlements */,
+				BE884C0B1E22275B009D253F /* Main.storyboard */,
+				BE884C0E1E22275B009D253F /* Assets.xcassets */,
+				BE884C101E22275B009D253F /* LaunchScreen.storyboard */,
+				BE884C131E22275B009D253F /* Info.plist */,
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
 		BE884BFB1E22275B009D253F = {
 			isa = PBXGroup;
 			children = (
@@ -276,21 +308,13 @@
 		BE884C061E22275B009D253F /* ANZ */ = {
 			isa = PBXGroup;
 			children = (
-				BE17C86A1E4878BF00F83D55 /* ANZ.entitlements */,
+				BE270C872022E9E900BC97BE /* Assets */,
+				BE270C862022E9D600BC97BE /* Coordinators */,
+				BE270C852022E9C500BC97BE /* View Controllers */,
 				BE884C071E22275B009D253F /* AppDelegate.swift */,
-				BE9917A11E4EC0B600C0685A /* LoginViewController.swift */,
-				BE884C091E22275B009D253F /* ViewController.swift */,
-				BE884C0B1E22275B009D253F /* Main.storyboard */,
-				BE884C0E1E22275B009D253F /* Assets.xcassets */,
-				BE884C101E22275B009D253F /* LaunchScreen.storyboard */,
-				BE884C131E22275B009D253F /* Info.plist */,
 				BECA0BB71E3DCDAD00946B50 /* Secrets.swift */,
-				BE2F10611E4B008E00398D72 /* Coordinator.swift */,
-				BE2F10631E4B00B000398D72 /* AppCoordinator.swift */,
 				BE2F10651E4B00D000398D72 /* Services.swift */,
-				BE2F10671E4B00FF00398D72 /* RootViewCoordinator.swift */,
 				BE9917A71E4F20FF00C0685A /* TwoWayBinding.swift */,
-				BE9917BC1E4FD59100C0685A /* AccountsViewController.swift */,
 			);
 			path = ANZ;
 			sourceTree = "<group>";
@@ -925,13 +949,13 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = ANZ/ANZ.entitlements;
+				CODE_SIGN_ENTITLEMENTS = ANZ/Assets/ANZ.entitlements;
 				DEVELOPMENT_TEAM = DQA7HX6GV3;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
-				INFOPLIST_FILE = ANZ/Info.plist;
+				INFOPLIST_FILE = ANZ/Assets/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = io.townsend.ANZ;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -944,13 +968,13 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = ANZ/ANZ.entitlements;
+				CODE_SIGN_ENTITLEMENTS = ANZ/Assets/ANZ.entitlements;
 				DEVELOPMENT_TEAM = DQA7HX6GV3;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
-				INFOPLIST_FILE = ANZ/Info.plist;
+				INFOPLIST_FILE = ANZ/Assets/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = io.townsend.ANZ;
 				PRODUCT_NAME = "$(TARGET_NAME)";
